@@ -1,8 +1,8 @@
 ﻿const { REST, Routes, SlashCommandBuilder, ChannelType } = require('discord.js');
 
 // 🔧 CONFIG
-const TOKEN = 'MYTOKEN;
-const CLIENT_ID = 'MyCLIENTID'; // from Developer Portal
+const TOKEN = 'TOKEN';
+const CLIENT_ID = 'CLIENTID'; // from Developer Portal
 const GUILD_ID = '974030257432719381';  // your test server
 
 // Define commands

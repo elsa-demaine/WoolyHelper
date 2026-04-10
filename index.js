@@ -1,4 +1,5 @@
-﻿const { Client, GatewayIntentBits } = require('discord.js');
+﻿require('dotenv').config();
+const { Client, GatewayIntentBits } = require('discord.js');
 const memberController = require('./MemberController.js');
 const counting = require('./Counting.js');
 const channelController = require('./ChannelController.js');
@@ -36,4 +37,4 @@ memberController.init(client);
 counting.init(client);
 channelController.init(client);
 
-client.login('TOKEN');
+client.login(process.env.TOKEN);
