@@ -47,7 +47,6 @@ function init(client) {
 
             const guild = client.guilds.cache.first();
             const member = guild.members.cache.get(message.author.id);
-            console.log(member.roles.cache);
 
             if (member.roles.cache.has(MOD_ID)) { return; }
             if (member.roles.cache.has(SS_ID)) { return; }
