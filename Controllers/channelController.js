@@ -10,7 +10,7 @@ const {
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
-async function CheckParties(guild, categoryId) {
+async function CheckParties(client, guild, categoryId) {
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
 
@@ -34,7 +34,7 @@ async function CheckParties(guild, categoryId) {
 
         channels.forEach(async (chan) => {
             try {
-                if (isExpired(chan) && await isInactive(chan, 24)) {
+                if (isExpired(chan) && await isInactive(chan, 48)) {
                     console.log(`${chan.name} is being deleted`);
                     chan.delete();
                 }
@@ -96,14 +96,14 @@ function init(client) {
             try {
                 const guild = client.guilds.cache.first();
 
-                CheckParties(guild, PARTY_UP_ID);
-                CheckParties(guild, MON_ID);
-                CheckParties(guild, TUE_ID);
-                CheckParties(guild, WED_ID);
-                CheckParties(guild, THU_ID);
-                CheckParties(guild, FRI_ID);
-                CheckParties(guild, SAT_ID);
-                CheckParties(guild, SUN_ID);
+                CheckParties(client, guild, PARTY_UP_ID);
+                CheckParties(client, guild, MON_ID);
+                CheckParties(client, guild, TUE_ID);
+                CheckParties(client, guild, WED_ID);
+                CheckParties(client, guild, THU_ID);
+                CheckParties(client, guild, FRI_ID);
+                CheckParties(client, guild, SAT_ID);
+                CheckParties(client, guild, SUN_ID);
             } catch (err) {
                 console.error(err);
                 await errorController.sendError(client, err);
