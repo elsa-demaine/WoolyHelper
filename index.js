@@ -1,9 +1,8 @@
 ﻿require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
-const memberController = require('./MemberController.js');
-const counting = require('./Counting.js');
-const channelController = require('./ChannelController.js');
-
+const memberController = require('./Controllers/memberController.js');
+const counting = require('./Controllers/countingController.js');
+const channelController = require('./Controllers/channelController.js');
 
 // === BOT SETUP ===
 const client = new Client({

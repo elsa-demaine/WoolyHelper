@@ -1,0 +1,45 @@
+const fs = require('fs');
+
+// 1490226018290765934 = gummy bot build
+
+// CountingController
+const CHANNEL_COUNTING = '0'; // 1351973680753938473 = let's-count
+const DATA_FILE = './counting.json';
+
+// ChannelController
+const MON_ID = '1330950028558209188';
+const TUE_ID = '1330950163325259796';
+const WED_ID = '1330950301330575362';
+const THU_ID = '1330950857457664002';
+const FRI_ID = '1330951291270332416';
+const SAT_ID = '1330948838122459238';
+const SUN_ID = '1330949893237379104';
+const PARTY_UP_ID = '1386610122620534905';
+
+// MemberController
+const CHANNEL_MEMBER_NAMES = '1489710392212062218';
+const CHANNEL_THEY_GONE = '1353695719265009705';
+const CHANNEL_IGN = '0';
+const MOD_ID = '1296388640213045290';
+const SS_ID = '1376457228491690004'; 
+const PH_ID = '1317588561410658495'; 
+
+module.exports = {
+    fs,
+    CHANNEL_COUNTING,
+    DATA_FILE,
+    MON_ID,
+    TUE_ID,
+    WED_ID,
+    THU_ID,
+    FRI_ID,
+    SAT_ID,
+    SUN_ID,
+    PARTY_UP_ID,
+    CHANNEL_MEMBER_NAMES,
+    CHANNEL_THEY_GONE,
+    CHANNEL_IGN,
+    MOD_ID,
+    SS_ID,
+    PH_ID
+};
