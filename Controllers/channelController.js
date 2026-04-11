@@ -8,17 +8,23 @@ const {
     SUN_ID,
     PARTY_UP_ID
 } = require('./../config.js');
+const errorController = require('./../errorHandler.js');
 
 async function CheckParties(guild, categoryId) {
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
 
         partyUp.threads.cache.forEach(async (thread) => {
-            if (await isInactive(thread, 48)) {
-                console.log(`${thread.name} is ready to be deleted`);
-                thread.delete();
-            } else {
-                console.log(`${thread.name} is still in use`);
+            try {
+                if (await isInactive(thread, 48)) {
+                    console.log(`${thread.name} is ready to be deleted`);
+                    thread.delete();
+                } else {
+                    console.log(`${thread.name} is still in use`);
+                }
+            } catch (err) {
+                console.error(err);
+                await errorController.sendError(client, err);
             }
         });
     } else {
@@ -27,9 +33,14 @@ async function CheckParties(guild, categoryId) {
         );
 
         channels.forEach(async (chan) => {
-            if (isExpired(chan) && await isInactive(chan, 24)) {
-                console.log(`${chan.name} is being deleted`);
-                chan.delete();
+            try {
+                if (isExpired(chan) && await isInactive(chan, 24)) {
+                    console.log(`${chan.name} is being deleted`);
+                    chan.delete();
+                }
+            } catch (err) {
+                console.error(err);
+                await errorController.sendError(client, err);
             }
         });
     }    
@@ -80,20 +91,23 @@ async function isInactive(channel, hours) {
 };
 
 function init(client) {
-
     client.once('clientReady', () => {
         setInterval(async () => {
-            const guild = client.guilds.cache.first();
+            try {
+                const guild = client.guilds.cache.first();
 
-            CheckParties(guild, PARTY_UP_ID);
-            CheckParties(guild, MON_ID);
-            CheckParties(guild, TUE_ID);
-            CheckParties(guild, WED_ID);
-            CheckParties(guild, THU_ID);
-            CheckParties(guild, FRI_ID);
-            CheckParties(guild, SAT_ID);
-            CheckParties(guild, SUN_ID);
-
+                CheckParties(guild, PARTY_UP_ID);
+                CheckParties(guild, MON_ID);
+                CheckParties(guild, TUE_ID);
+                CheckParties(guild, WED_ID);
+                CheckParties(guild, THU_ID);
+                CheckParties(guild, FRI_ID);
+                CheckParties(guild, SAT_ID);
+                CheckParties(guild, SUN_ID);
+            } catch (err) {
+                console.error(err);
+                await errorController.sendError(client, err);
+            }
         }, 2 * 60 * 60 * 1000); // 2 hours (hour * minute * seconds * milliseconds)
     });
 };

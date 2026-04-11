@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-// 1490226018290765934 = gummy bot build
+// ErrorController
+const LOG_CHANNEL_ID = '1490226018290765934'; // gummy bot build
+const GUMMY_ID = '234669887102910465';
 
 // CountingController
 const CHANNEL_COUNTING = '0'; // 1351973680753938473 = let's-count
@@ -26,6 +28,8 @@ const PH_ID = '1317588561410658495';
 
 module.exports = {
     fs,
+    LOG_CHANNEL_ID,
+    GUMMY_ID,
     CHANNEL_COUNTING,
     DATA_FILE,
     MON_ID,
