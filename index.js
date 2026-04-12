@@ -30,6 +30,8 @@ process.on('uncaughtException', async (error) => {
 client.once('clientReady', async () => {
     try {
         console.log(`Bot online: ${client.user.tag}`);
+        const guild = client.guilds.cache.first();
+        await guild.members.fetch();
         client.user.setActivity('Wool Growing Competition');
     } catch (err) {
         console.error(err);
