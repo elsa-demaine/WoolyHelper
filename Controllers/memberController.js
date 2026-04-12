@@ -16,10 +16,10 @@ function init(client) {
     // === LEAVES ===
     client.on('guildMemberRemove', async (member) => {
         try {
-            await channelLogs.send(`DEBUG: Member left: ${member.user.globalName}`);
+            await channelLogs.send(`DEBUG: Member left: ${member.user.username }`);
 
             const channel = member.guild.channels.cache.get(CHANNEL_THEY_GONE);
-            await channel.send(`💀 Left: ${member.user.globalName} | ${member.nickname || 'None'}`);
+            await channel.send(`💀 Left: ${member.user.username } | ${member.nickname || 'None'}`);
         } catch (err) {
             console.error(err);
             await errorController.sendError(client, err);
@@ -36,7 +36,7 @@ function init(client) {
             if (oldNick !== newNick) {
                 const channel = newMember.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
                 // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${oldMember.user.globalName} has updated from ${oldMember.nickname} to ${newMember.nickname || 'None'}`);
+                await channel.send(`✏️ Updated: ${oldMember.user.username} has updated from ${oldMember.nickname} to ${newMember.nickname || 'None'}`);
             }
         } catch (err) {
             console.error(err);
