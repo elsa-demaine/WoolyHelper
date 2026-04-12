@@ -1,4 +1,5 @@
 const {
+    LOG_CHANNEL_ID,
     MON_ID,
     TUE_ID,
     WED_ID,
@@ -11,13 +12,15 @@ const {
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild, categoryId) {
+    const channelLogs = client.channels.cache.get(LOG_CHANNEL_ID);
+
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
 
         partyUp.threads.cache.forEach(async (thread) => {
             try {
                 if (await isInactive(thread, 48)) {
-                    console.log(`${thread.name} is ready to be deleted`);
+                    channelLogs.send(`${thread.name} is being deleted`);
                     thread.delete();
                 } else {
                     console.log(`${thread.name} is still in use`);
@@ -34,8 +37,8 @@ async function CheckParties(client, guild, categoryId) {
 
         channels.forEach(async (chan) => {
             try {
-                if (isExpired(chan) && await isInactive(chan, 48)) {
-                    console.log(`${chan.name} is being deleted`);
+                if (isExpired(chan) && await isInactive(chan, 24)) {
+                    channelLogs.send(`${chan.name} is being deleted`);
                     chan.delete();
                 }
             } catch (err) {

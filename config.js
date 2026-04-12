@@ -25,6 +25,7 @@ const CHANNEL_IGN = '1492542404270489871';
 const MOD_ID = '1296388640213045290';
 const SS_ID = '1376457228491690004'; 
 const PH_ID = '1317588561410658495'; 
+const SHROOMS_ID = '1353641622360948766'; 
 
 module.exports = {
     fs,
@@ -45,5 +46,6 @@ module.exports = {
     CHANNEL_IGN,
     MOD_ID,
     SS_ID,
-    PH_ID
+    PH_ID,
+    SHROOMS_ID
 };

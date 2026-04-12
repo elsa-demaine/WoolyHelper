@@ -1,18 +1,22 @@
 ﻿const {
+    LOG_CHANNEL_ID,
     CHANNEL_MEMBER_NAMES,
     CHANNEL_THEY_GONE,
     CHANNEL_IGN,
     MOD_ID,
     SS_ID,
-    PH_ID
+    PH_ID,
+    SHROOMS_ID
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
 function init(client) {
+    const channelLogs = client.channels.cache.get(LOG_CHANNEL_ID);
+
     // === LEAVES ===
     client.on('guildMemberRemove', async (member) => {
         try {
-            console.log(`DEBUG: Member left: ${member.user.globalName}`);
+            await channelLogs.send(`DEBUG: Member left: ${member.user.globalName}`);
 
             const channel = member.guild.channels.cache.get(CHANNEL_THEY_GONE);
             await channel.send(`💀 Left: ${member.user.globalName} | ${member.nickname || 'None'}`);
@@ -32,7 +36,7 @@ function init(client) {
             if (oldNick !== newNick) {
                 const channel = newMember.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
                 // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${newMember.user.globalName} has updated from ${oldMember.nickname} to ${newMember.nickname || 'None'}`);
+                await channel.send(`✏️ Updated: ${oldMember.user.globalName} has updated from ${oldMember.nickname} to ${newMember.nickname || 'None'}`);
             }
         } catch (err) {
             console.error(err);
@@ -58,6 +62,7 @@ function init(client) {
                     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
                 }[c]));
             await member.setNickname(safenickname);
+            member.roles.add(SHROOMS_ID);
             await message.delete();
         } catch (err) {
             console.error(err);
