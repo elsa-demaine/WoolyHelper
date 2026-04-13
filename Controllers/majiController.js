@@ -35,13 +35,13 @@ function init(client) {
                 if (event.ongoing) {
                     return message.reply(
                         `**[Maji Market](<https://palia.wiki.gg/wiki/Maji_Market>) is LIVE!**\n` +
-                        `Ends: <t:${event.endTs}:F> (Time left: <t:${event.endTs}:R>)`
+                        `Ends <t:${event.endTs}:R> on <t:${event.endTs}:F>`
                     );
                 }
 
                 return message.reply(
                     `**Next [Maji Market](<https://palia.wiki.gg/wiki/Maji_Market>)**\n` +
-                    `Start: <t:${event.startTs}:F> - End: <t:${event.endTs}:F>\n` +
+                    `Start: <t:${event.startTs}:F> - End: <t:${event.endTs}:F>` +
                     `Starts in: <t:${event.startTs}:R>`
                 );
             }
