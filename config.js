@@ -27,6 +27,9 @@ const SS_ID = '1376457228491690004';
 const PH_ID = '1317588561410658495'; 
 const SHROOMS_ID = '1353641622360948766'; 
 
+// MajiController
+const PALIA_ID = '1283775578234945628';
+
 module.exports = {
     fs,
     LOG_CHANNEL_ID,
@@ -47,5 +50,6 @@ module.exports = {
     MOD_ID,
     SS_ID,
     PH_ID,
-    SHROOMS_ID
+    SHROOMS_ID,
+    PALIA_ID
 };

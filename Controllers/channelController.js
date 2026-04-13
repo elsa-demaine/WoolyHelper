@@ -89,8 +89,8 @@ function isExpired(channel) {
 async function isInactive(channel, hours) {
     const lastMessage = await channel.messages.fetch({ limit: 1 }).then(msgs => msgs.first());
     const now = new Date();
-    const is24hours = new Date(new Date(lastMessage.createdAt).getTime() + 60 * 60 * hours * 1000);
-    return now > is24hours;
+    const isHours = new Date(new Date(lastMessage.createdAt).getTime() + 60 * 60 * hours * 1000);
+    return now > isHours;
 };
 
 function init(client) {

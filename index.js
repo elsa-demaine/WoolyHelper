@@ -4,6 +4,7 @@ const errorController = require('./errorHandler.js');
 const memberController = require('./Controllers/memberController.js');
 const counting = require('./Controllers/countingController.js');
 const channelController = require('./Controllers/channelController.js');
+const majiController = require('./Controllers/majiController.js');
 
 // === BOT SETUP ===
 const client = new Client({
@@ -57,6 +58,7 @@ try {
     memberController.init(client);
     counting.init(client);
     channelController.init(client);
+    majiController.init(client);
 } catch (err) {
     console.error(err);
     errorController.sendError(client, err);
