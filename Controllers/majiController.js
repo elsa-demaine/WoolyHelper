@@ -28,19 +28,19 @@ function init(client) {
 
                 if (!event) {
                     return message.reply(
-                        "❌ Couldn't fetch the next [Maji Market](https://palia.wiki.gg/wiki/Maji_Market)."
+                        "❌ Couldn't fetch the next [Maji Market](<https://palia.wiki.gg/wiki/Maji_Market>)."
                     );
                 }
 
                 if (event.ongoing) {
                     return message.reply(
-                        `**[Maji Market](https://palia.wiki.gg/wiki/Maji_Market) is LIVE!**\n` +
+                        `**[Maji Market](<https://palia.wiki.gg/wiki/Maji_Market>) is LIVE!**\n` +
                         `Ends: <t:${event.endTs}:F> (Time left: <t:${event.endTs}:R>)`
                     );
                 }
 
                 return message.reply(
-                    `**Next [Maji Market](https://palia.wiki.gg/wiki/Maji_Market)**\n` +
+                    `**Next [Maji Market](<https://palia.wiki.gg/wiki/Maji_Market>)**\n` +
                     `Start: <t:${event.startTs}:F> - End: <t:${event.endTs}:F>\n` +
                     `Starts in: <t:${event.startTs}:R>`
                 );
@@ -84,9 +84,6 @@ async function getNextMajiMarket(client) {
                         const startTs = parseDate(start);
                         const endTs = parseDate(end);
 
-                        console.log("DEBUG ROW:", start, end);
-                        console.log("DEBUG TS:", startTs, endTs, currentTs);
-
                         if (!startTs || !endTs) return;
 
                         // Ongoing event
@@ -106,7 +103,6 @@ async function getNextMajiMarket(client) {
                                 endTs,
                                 ongoing: false,
                             };
-                            //return false;
                         }                     
                     }
                 }
