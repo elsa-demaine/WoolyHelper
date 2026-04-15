@@ -24,7 +24,8 @@ function init(client) {
             if (message.channel.id !== CHANNEL_COUNTING) return; // ignore other channels
             const channel = client.channels.cache.get(CHANNEL_COUNTING);
 
-            if (message.author.roles.has(BOTS_ID)) return;
+            const member = await message.guild.members.fetch(message.author.id);
+            if (member.roles.cache.has(BOTS_ID)) return;
 
             const currentNumber = Number(message.content);
             if (!Number.isNaN(currentNumber) && Number.isInteger(currentNumber)) {
@@ -51,12 +52,12 @@ function init(client) {
                 // messages
                 let nextNumber = `The next number is: ${data.previousNumber + 1} and can be sent by anyone other than ${previousMember?.displayName || previousMember?.globalName || 'Unknown'}.`;
                 let sameAuthor = `You cannot count twice in a row and the save hasn't come back 😱 Start again at 1`;
-                let savedUsed = `${message.author?.displayName || message.author?.globalName || 'Unknown'} used the save. ${nextNumber} The save will come back after the next 100 correct numbers`;
+                let savedUsed = `${member?.displayName || member?.globalName || 'Unknown'} used the save. ${nextNumber} The save will come back after the next 100 correct numbers`;
                 let twice = `The number ${currentNumber} was sent twice in a row! ${nextNumber}`;
                 let wrongNumber = `Wrong number and the save hasn't come back 😱 Start again at 1`;
 
                 // === Checking numbers ===
-                if (message.author.id === data.previousAuthorId && currentNumber > 1) {
+                if (member.id === data.previousAuthorId && currentNumber > 1) {
                     if (data.previousNumber - data.savedUsedNumber < 100) {
                         message.react("❌");
                         data.previousNumber = 0;
@@ -70,12 +71,12 @@ function init(client) {
                 } else if (currentNumber === data.previousNumber + 1) {
                     if (currentNumber > data.currentHighscore) {
                         message.react("🏆");
-                        data.previousAuthorId = message.author.id;
+                        data.previousAuthorId = member.id;
                         data.currentHighscore = currentNumber;
                         data.previousNumber = currentNumber;
                     } else {
                         message.react("✅");
-                        data.previousAuthorId = message.author.id;
+                        data.previousAuthorId = member.id;
                         data.previousNumber = currentNumber;
                     }
                     if (currentNumber.toFixed().endsWith("00")) {
