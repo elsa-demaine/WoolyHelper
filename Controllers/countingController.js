@@ -1,6 +1,7 @@
 ﻿const {
     fs,
     CHANNEL_COUNTING,
+    BOTS_ID,
     DATA_FILE
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
@@ -22,6 +23,8 @@ function init(client) {
         try {
             if (message.channel.id !== CHANNEL_COUNTING) return; // ignore other channels
             const channel = client.channels.cache.get(CHANNEL_COUNTING);
+
+            if (message.author.roles.cache.has(BOTS_ID)) return;
 
             const currentNumber = Number(message.content);
             if (!Number.isNaN(currentNumber) && Number.isInteger(currentNumber)) {
