@@ -24,7 +24,7 @@ function init(client) {
             if (message.channel.id !== CHANNEL_COUNTING) return; // ignore other channels
             const channel = client.channels.cache.get(CHANNEL_COUNTING);
 
-            if (message.author.roles.cache.has(BOTS_ID)) return;
+            if (message.author.roles.has(BOTS_ID)) return;
 
             const currentNumber = Number(message.content);
             if (!Number.isNaN(currentNumber) && Number.isInteger(currentNumber)) {
