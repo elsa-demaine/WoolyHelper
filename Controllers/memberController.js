@@ -19,40 +19,9 @@ function init(client) {
             await channelLogs.send(`DEBUG: Member left username: ${member.user.username}`);
             await channelLogs.send(`DEBUG: Member left nickname: ${member.nickname}`);
             await channelLogs.send(`DEBUG: Member left displayName: ${member.displayName}`);
-            await channelLogs.send(`DEBUG: Member left globalName: ${member.globalName}`);
 
             const channel = member.guild.channels.cache.get(CHANNEL_THEY_GONE);
             await channel.send(`💀 Left: ${member.user.username} | ${member.nickname || 'None'}`);
-        } catch (err) {
-            console.error(err);
-            await errorController.sendError(client, err);
-        }
-    });
-
-    // === UPDATES ===
-    client.on('guildMemberUpdate', async (oldMember, newMember) => {
-        try {
-            const channelLogs = oldMember.guild.channels.cache.get(LOG_CHANNEL_ID);
-            await channelLogs.send(`DEBUG: nickname old username: ${oldMember.user.username}`);
-            await channelLogs.send(`DEBUG: nickname old nickname: ${oldMember.nickname}`);
-            await channelLogs.send(`DEBUG: nickname old displayName: ${oldMember.displayName}`);
-            await channelLogs.send(`DEBUG: nickname old globalName: ${oldMember.globalName}`);
-            await channelLogs.send(`DEBUG: nickname new username: ${newMember.user.username}`);
-            await channelLogs.send(`DEBUG: nickname new nickname: ${newMember.nickname}`);
-            await channelLogs.send(`DEBUG: nickname new displayName: ${newMember.displayName}`);
-            await channelLogs.send(`DEBUG: nickname new globalName: ${newMember.globalName}`);
-
-            // Nickname change
-            const oldNick = oldMember.nickname ?? null;
-            const newNick = newMember.nickname ?? null;
-
-            await channelLogs.send(`DEBUG: nickname ver old / new: ${oldNick} / ${newNick}`);
-
-            if (oldNick !== newNick) {
-                const channel = newMember.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
-                // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${oldMember.user.username} has updated from ${oldMember.nickname} to ${newMember.nickname || 'None'}`);
-            }
         } catch (err) {
             console.error(err);
             await errorController.sendError(client, err);
@@ -76,6 +45,11 @@ function init(client) {
                 .replace(/[&<>"']/g, (c) => ({
                     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
                 }[c]));
+
+            const channel = member.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
+            // Send ONLY the updated line
+            await channel.send(`✏️ Updated: ${member.user.username} has updated from ${member.nickname} to ${member.safenickname}`);
+
             await member.setNickname(safenickname);
             await member.roles.add(SHROOMS_ID);
             await message.delete();
