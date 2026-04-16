@@ -15,7 +15,7 @@ function init(client) {
     client.on('guildMemberRemove', async (member) => {
         try {
             const channel = member.guild.channels.cache.get(CHANNEL_THEY_GONE);
-            await channel.send(`💀 Left: ${member.user.username} | ${member.nickname || member.displayName || 'None'}`);
+            await channel.send(`💀 Left: ${member.user.username} | ${member.displayName || member.nickname || 'None'}`);
         } catch (err) {
             console.error(err);
             await errorController.sendError(client, err);
