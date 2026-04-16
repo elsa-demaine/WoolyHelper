@@ -1,15 +1,25 @@
 ﻿const { REST, Routes, SlashCommandBuilder, ChannelType } = require('discord.js');
 
-// 🔧 CONFIG
+// CONFIG
 const TOKEN = 'TOKEN';
-const CLIENT_ID = 'CLIENTID'; // from Developer Portal
-const GUILD_ID = '974030257432719381';  // your test server
+const CLIENT_ID = 'CLIENT_ID'; // from Developer Portal
+const GUILD_ID = '974030257432719381';
 
 // Define commands
 const commands = [
     new SlashCommandBuilder()
         .setName('help')
-        .setDescription('Lists all of Wooly Helpers commands')
+        .setDescription('Lists all of Wooly Helpers commands'),
+    new SlashCommandBuilder()
+        .setName('spin')
+        .setDescription('Spin a list of names to find a winner')
+        .addStringOption((option) => option
+            .setName('participants')
+            .setDescription('list of names separated by ; ')
+            .setRequired(true))
+        .addNumberOption((option) => option
+            .setName('winners')
+            .setDescription('number of winners (default = 1: max = 10)'))
 ].map(cmd => cmd.toJSON());
 
 // Register
