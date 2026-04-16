@@ -114,7 +114,9 @@ function generateSlotGIF(entries, winners) {
         ctx.strokeStyle = '#ffd700';
         ctx.lineWidth = 2;
         ctx.strokeRect(0, centerY - itemHeight / 2, width, itemHeight);
-        encoder.addFrame(ctx);
+        //encoder.addFrame(ctx);
+        const imageData = ctx.getImageData(0, 0, width, height);
+        encoder.addFrame(imageData.data);
     }
 
     // HOLD FRAME (linger effect)
