@@ -25,25 +25,14 @@ function init(client) {
     // === UPDATES ===
     client.on('guildMemberUpdate', async (oldMember, newMember) => {
         try {
-            // Nickname change
-            const oldNick = oldMember.nickname ?? null;
-            const newNick = newMember.nickname ?? null;
+            // DisplayName change
+            const oldName = oldMember.displayName ?? null;
+            const newName = newMember.displayName ?? null;
 
-            if (oldNick !== newNick) {
-                const channelLogs = oldMember.guild.channels.cache.get(LOG_CHANNEL_ID);
-                await channelLogs.send(`DEBUG: nickname old username: ${oldMember.user.username}`);
-                await channelLogs.send(`DEBUG: nickname old nickname: ${oldMember.nickname}`);
-                await channelLogs.send(`DEBUG: nickname old displayName: ${oldMember.displayName}`);
-                await channelLogs.send(`DEBUG: nickname old globalName: ${oldMember.globalName}`);
-                await channelLogs.send(`DEBUG: nickname new username: ${newMember.user.username}`);
-                await channelLogs.send(`DEBUG: nickname new nickname: ${newMember.nickname}`);
-                await channelLogs.send(`DEBUG: nickname new displayName: ${newMember.displayName}`);
-                await channelLogs.send(`DEBUG: nickname new globalName: ${newMember.globalName}`);
-                await channelLogs.send(`DEBUG: nickname ver old / new: ${oldNick} / ${newNick}`);
-
+            if (oldName !== newName) {
                 const channel = newMember.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
                 // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.displayName} to ${newMember.displayName || 'None'}`);
+                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.displayName} to ${newMember.displayName}`);
             }
         } catch (err) {
             console.error(err);
