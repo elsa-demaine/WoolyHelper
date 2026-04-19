@@ -48,6 +48,9 @@ function init(client) {
             const guild = client.guilds.cache.first();
             const member = guild.members.cache.get(message.author.id);
 
+            const channel = guild.channels.cache.get(LOG_CHANNEL_ID);
+            await channel.send(`DEBUG: ${member.user.username} has written ${message.content}`);
+
             if (member.roles.cache.has(MOD_ID)) return;
             if (member.roles.cache.has(SS_ID)) return;
             if (member.roles.cache.has(PH_ID)) return;
