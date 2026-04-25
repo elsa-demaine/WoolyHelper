@@ -38,7 +38,6 @@ async function CheckParties(client, guild, categoryId) {
         channels.forEach(async (chan) => {
             try {
                 if (isExpired(chan) && await isInactive(chan, 24)) {
-                    channelLogs.send(`${chan.name} is being deleted`);
                     chan.delete();
                 }
             } catch (err) {

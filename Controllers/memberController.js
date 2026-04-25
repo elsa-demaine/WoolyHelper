@@ -25,10 +25,13 @@ function init(client) {
     // === UPDATES ===
     client.on('guildMemberUpdate', async (oldMember, newMember) => {
         try {
-            if (oldMember.displayName !== newMember.displayName) {
+            const oldNick = oldMember.displayName ?? 'None';
+            const newNick = newMember.displayName ?? 'None';
+
+            if (oldNick !== newNick) {
                 const channel = newMember.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
                 // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.displayName} to ${newMember.displayName}`);
+                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.displayName ?? 'None'} to ${newMember.displayName}`);
             }
         } catch (err) {
             console.error(err);
