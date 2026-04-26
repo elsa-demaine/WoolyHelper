@@ -46,7 +46,7 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'help') {
-            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks like deleting old parties or having fun in the let's count channel! \nIf you need more information please contact GummyMouton <3.\nVersion 1.0.1`);
+            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks like deleting old parties or having fun in the let's count channel! \nIf you need more information please contact GummyMouton <3.\nVersion 1.0.2`);
         }
     } catch (err) {
         console.error(err);

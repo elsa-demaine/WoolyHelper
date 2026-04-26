@@ -26,13 +26,13 @@ function init(client) {
     client.on('guildMemberUpdate', async (oldMember, newMember) => {
         try {
             // doesn't seem to work with displayname
-            const oldNick = oldMember.nickName ?? null;
-            const newNick = newMember.nickName ?? null;
+            const oldNick = oldMember.nickname ?? null;
+            const newNick = newMember.nickname ?? null;
 
             if (oldNick !== newNick) {
                 const channel = newMember.guild.channels.cache.get(CHANNEL_MEMBER_NAMES);
                 // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.nickName ?? 'None'} to ${newMember.nickName ?? 'None'}`);
+                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.nickname ?? 'None'} to ${newMember.nickname ?? 'None'}`);
             }
         } catch (err) {
             console.error(err);
@@ -49,7 +49,7 @@ function init(client) {
             const member = guild.members.cache.get(message.author.id);
 
             const channel = guild.channels.cache.get(LOG_CHANNEL_ID);
-            await channel.send(`DEBUG: ${member.user.username} (${member.user.nickname}) has written ${message.content}`);
+            await channel.send(`DEBUG: ${member.user.username} (${member.user.nickname} / ${member.user.displayName}) has written ${message.content}`);
 
             if (member.roles.cache.has(MOD_ID)) return;
             if (member.roles.cache.has(SS_ID)) return;
