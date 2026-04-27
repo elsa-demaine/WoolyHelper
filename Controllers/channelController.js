@@ -19,11 +19,9 @@ async function CheckParties(client, guild, categoryId) {
 
         partyUp.threads.cache.forEach(async (thread) => {
             try {
-                if (await isInactive(thread, 48)) {
+                if (await isInactive(thread, 168)) { // 1 week
                     channelLogs.send(`${thread.name} is being deleted`);
                     thread.delete();
-                } else {
-                    console.log(`${thread.name} is still in use`);
                 }
             } catch (err) {
                 console.error(err);
