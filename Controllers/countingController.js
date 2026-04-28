@@ -112,7 +112,6 @@ function init(client) {
                 return channel.send('1) No skipping numbers \n2) No going back in numbers \n3) Must alternate counters \n4) Do not intentionally ruin the count');
             };
         } catch (err) {
-            console.error(err);
             await errorController.sendError(client, err);
         }
     });
