@@ -11,6 +11,9 @@ const commands = [
         .setName('help')
         .setDescription('Lists all of Wooly Helpers commands'),
     new SlashCommandBuilder()
+        .setName('non-shrooms')
+        .setDescription('List all server members who do not have the Shrooms role'),
+    new SlashCommandBuilder()
         .setName('spin')
         .setDescription('Spin a list of names to find a winner')
         .addStringOption((option) => option

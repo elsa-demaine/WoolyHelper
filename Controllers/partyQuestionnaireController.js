@@ -83,7 +83,10 @@ function init(client) {
                 }
 
                 await interaction.reply({
-                    content: `<@&${L4G_ID}> looking for a group!`
+                    content: `<@&${L4G_ID}> looking for a group!`,
+                    allowedMentions: {
+                        roles: [L4G_ID]
+                    }
                 });
             }
 
@@ -96,7 +99,10 @@ function init(client) {
                 }
 
                 await interaction.reply({
-                    content: `<@&${EXTERNAL_PARTIES_ID}> external cooking party!`
+                    content: `<@&${EXTERNAL_PARTIES_ID}> external cooking party!`,
+                    allowedMentions: {
+                        roles: [EXTERNAL_PARTIES_ID]
+                    }
                 });
             }
 
@@ -109,7 +115,10 @@ function init(client) {
                 }
 
                 await interaction.reply({
-                    content: `<@&${EXTERNAL_PARTIES_ID}> external hunting party!`
+                    content: `<@&${EXTERNAL_PARTIES_ID}> external hunting party!`,
+                    allowedMentions: {
+                        roles: [EXTERNAL_PARTIES_ID]
+                    }
                 });
             }    
 
@@ -122,7 +131,10 @@ function init(client) {
                 }
 
                 await interaction.reply({
-                    content: `<@&${EXTERNAL_PARTIES_ID}> external bugging party!`,
+                    content: `<@&${EXTERNAL_PARTIES_ID}> external bugging party`,
+                    allowedMentions: {
+                        roles: [EXTERNAL_PARTIES_ID]
+                    }
                 });
             }
 
@@ -136,6 +148,9 @@ function init(client) {
 
                 await interaction.reply({
                     content: `<@&${EXTERNAL_PARTIES_ID}> external mining party!`,
+                    allowedMentions: {
+                        roles: [EXTERNAL_PARTIES_ID]
+                    }
                 });
             }
 
@@ -149,6 +164,9 @@ function init(client) {
 
                 await interaction.reply({
                     content: `<@&${EXTERNAL_PARTIES_ID}> external fishing party!`,
+                    allowedMentions: {
+                        roles: [EXTERNAL_PARTIES_ID]
+                    }
                 });
             }
 
@@ -162,6 +180,9 @@ function init(client) {
 
                 await interaction.reply({
                     content: `<@&${EXTERNAL_PARTIES_ID}> external foraging party!`,
+                    allowedMentions: {
+                        roles: [EXTERNAL_PARTIES_ID]
+                    }
                 });
             }
         } catch (err) {
