@@ -1,6 +1,6 @@
 ﻿const {
     fs,
-    CHANNEL_COUNTING,
+    COUNTING_ID,
     BOTS_ID,
     DATA_FILE
 } = require('./../config.js');
@@ -21,8 +21,8 @@ function init(client) {
     // === MESSAGE COMMANDS ===
     client.on('messageCreate', async (message) => {
         try {
-            if (message.channel.id !== CHANNEL_COUNTING) return; // ignore other channels
-            const channel = client.channels.cache.get(CHANNEL_COUNTING);
+            if (message.channel.id !== COUNTING_ID) return; // ignore other channels
+            const channel = client.channels.cache.get(COUNTING_ID);
 
             const member = await message.guild.members.fetch(message.author.id);
             if (member.roles.cache.has(BOTS_ID)) return;
@@ -118,14 +118,14 @@ function init(client) {
 
     client.on('messageDelete', async (message) => {
         try {
-            if (message.channel.id !== CHANNEL_COUNTING) return; // ignore other channels
-            const channel = client.channels.cache.get(CHANNEL_COUNTING);
+            if (message.channel.id !== COUNTING_ID) return; // ignore other channels
+            const channel = client.channels.cache.get(COUNTING_ID);
 
             if (message.partial) {
                 try {
                     message = await message.fetch();
                 } catch (err) {
-                    console.log("Impossible to get message:", err);
+                    await errorController.sendError(client, err);
                     return;
                 }
             }
@@ -168,7 +168,6 @@ function init(client) {
                 channel.send(`The number ${currentNumber} sent by ${memberDeleted?.displayName || memberDeleted?.globalName || 'Unknown'} has been deleted. ${next}`);
             }
         } catch (err) {
-            console.error(err);
             await errorController.sendError(client, err);
         }
     });

@@ -1,5 +1,5 @@
 ﻿const {
-    LOG_CHANNEL_ID,
+    GUMMY_BOT_BUILD_ID,
     GUMMY_ID
 } = require('./config.js');
 
@@ -15,7 +15,7 @@ async function sendError(client, error) {
 
 async function sendErrorToChannel(client, errorMessage) {
     try {
-        const channel = await client.channels.fetch(LOG_CHANNEL_ID);
+        const channel = await client.channels.fetch(GUMMY_BOT_BUILD_ID);
 
         if (!channel) return;
 

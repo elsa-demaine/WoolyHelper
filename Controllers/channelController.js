@@ -1,5 +1,5 @@
 const {
-    LOG_CHANNEL_ID,
+    GUMMY_BOT_BUILD_ID,
     MON_ID,
     TUE_ID,
     WED_ID,
@@ -12,7 +12,7 @@ const {
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild, categoryId) {
-    const channelLogs = client.channels.cache.get(LOG_CHANNEL_ID);
+    const channelLogs = client.channels.cache.get(GUMMY_BOT_BUILD_ID);
 
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
@@ -24,7 +24,6 @@ async function CheckParties(client, guild, categoryId) {
                     thread.delete();
                 }
             } catch (err) {
-                console.error(err);
                 await errorController.sendError(client, err);
             }
         });
@@ -39,7 +38,6 @@ async function CheckParties(client, guild, categoryId) {
                     chan.delete();
                 }
             } catch (err) {
-                console.error(err);
                 await errorController.sendError(client, err);
             }
         });
@@ -105,7 +103,6 @@ function init(client) {
                 CheckParties(client, guild, SAT_ID);
                 CheckParties(client, guild, SUN_ID);
             } catch (err) {
-                console.error(err);
                 await errorController.sendError(client, err);
             }
         }, 2 * 60 * 60 * 1000); // 2 hours (hour * minute * seconds * milliseconds)

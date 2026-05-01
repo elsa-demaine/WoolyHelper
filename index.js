@@ -20,12 +20,10 @@ const client = new Client({
 });
 
 process.on('unhandledRejection', async (reason) => {
-    console.error(reason);
     await errorController.sendError(client, reason);
 });
 
 process.on('uncaughtException', async (error) => {
-    console.error(error);
     await errorController.sendError(client, error);
 });
 
@@ -37,7 +35,6 @@ client.once('clientReady', async () => {
         await guild.members.fetch();
         client.user.setActivity('Wool Growing Competition');
     } catch (err) {
-        console.error(err);
         await errorController.sendError(client, err);
     }
 });
@@ -47,11 +44,10 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'help') {
-            const version = '1.2.0';
+            const version = '1.2.1';
             await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\n - Party Thread pings\nIf you need more information please contact GummyMouton <3.\nVersion ${version}`);
         }
     } catch (err) {
-        console.error(err);
         await errorController.sendError(client, err);
     }
 });
@@ -65,7 +61,6 @@ try {
     slotsController.init(client);
     partyQuestionnaireController.init(client);
 } catch (err) {
-    console.error(err);
     errorController.sendError(client, err);
 }
 
