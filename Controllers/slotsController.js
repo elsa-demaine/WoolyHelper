@@ -8,6 +8,8 @@ function init(client) {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'spin') {
+            await interaction.deferReply({ content: "Loading..." });
+
             const participants = interaction.options.getString('participants');
             const nbWinners = interaction.options.getNumber('winners');
 
@@ -16,9 +18,9 @@ function init(client) {
             let winners = [];
 
             if (entries.length < nbWinners) {
-                await interaction.reply(`too many winners compared to participants count`);
+                return await interaction.editreply(`too many winners compared to participants count`);
             } else if (nbWinners > 10) {
-                await interaction.reply(`too many winners: max 10`);
+                return await interaction.editreply(`too many winners: max 10`);
             }
             else {
                 while (winners.length < nbWinners) {
@@ -32,7 +34,7 @@ function init(client) {
 
                 const attachment = new AttachmentBuilder(buffer, { name: 'spin.gif' });
 
-                await interaction.reply({
+                await interaction.editreply({
                     content: `🎉 Winner(s): **${winners.join(` | `)}**`,
                     files: [attachment]
                 });
