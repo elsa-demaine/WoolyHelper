@@ -2,7 +2,7 @@
 const cheerio = require("cheerio");
 const errorController = require('./../errorHandler.js');
 const {
-    PALIA_GENERAL_CHAT_ID
+    PALIA_CAT_ID
 } = require('./../config.js');
 
 let cache = {
@@ -21,7 +21,7 @@ function parseDate(dateStr) {
 function init(client) {
     client.on('messageCreate', async (message) => {
         try {
-            if (message.channel.parentId !== PALIA_GENERAL_CHAT_ID) return; // ignore other channels not in Palia category
+            if (message.channel.parentId !== PALIA_CAT_ID) return; // ignore other channels not in Palia category
             if (String(message.content).toUpperCase() === String(`!maji`).toUpperCase()) {
 
                 const event = await getNextMajiMarket(client);

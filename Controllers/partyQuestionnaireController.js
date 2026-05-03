@@ -88,7 +88,7 @@ function init(client) {
                     const config = partyMap[interaction.customId];
                     if (!config) return;
 
-                    const channel = interaction.guild.channels.cache.get(PALIA_GENERAL_CHAT_ID);
+                    const channel = interaction.guild.channels.fetch(PALIA_GENERAL_CHAT_ID);
                     await channel.send({
                         content: `<@&${config.role}> ${config.text} <#${interaction.channel.id}>`,
                         allowedMentions: { roles: [config.role] }
