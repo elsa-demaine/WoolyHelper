@@ -13,13 +13,15 @@
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
+const welcomedMembers = new Set();
+
 function init(client) {
     // === JOINS ===
     client.on('guildMemberAdd', async (member) => {
         try {
             await member.roles.add(UNVERIFIED_ID);
 
-            setInterval(async () => {
+            setTimeout(async () => {
                 const isShroom = member.roles.cache.has(SHROOMS_ID);
 
                 if (!isShroom) {
@@ -29,7 +31,7 @@ function init(client) {
                 }
             }, 24 * 60 * 60 * 1000); // 24 hours (hour * minute * seconds * milliseconds)
 
-            setInterval(async () => {
+            setTimeout(async () => {
                 const isShroom = member.roles.cache.has(SHROOMS_ID);
 
                 if (!isShroom) {
@@ -69,17 +71,24 @@ function init(client) {
             const isOldShroom = oldMember.roles.cache.has(SHROOMS_ID);
             const isNewShroom = newMember.roles.cache.has(SHROOMS_ID);
 
+            // Prevent duplicate welcomes
+            if (welcomedMembers.has(newMember.id)) return;
+            welcomedMembers.add(newMember.id);
+            // Cleanup after 1 minute
+            setTimeout(() => welcomedMembers.delete(newMember.id), 60_000);
+
             if (isOldShroom === false && isNewShroom === true) {
                 if (oldMember.user.username === 'smolcrisp') {
                     const channel = newMember.guild.channels.cache.get(MEMBER_NAMES_ID);
                     await channel.send(`Bad Smol! Stop removing your Shrooms role!`);
                 } else {
-                    // TO DO
-                    //const channel = newMember.guild.channels.cache.get(CHITTER_CHATTER_ID);
-                    const channel = newMember.guild.channels.cache.get(GUMMY_BOT_BUILD_ID);
+                    const channel = newMember.guild.channels.cache.get(CHITTER_CHATTER_ID);
                     const messagesList = [
-                        `Welcome to the discord <@${newMember.user.id}>`,
-                        `Welcome to the grove <@${newMember.user.id}>`
+                        `The grove grows bigger thanks to <@${newMember.user.id}> <:xCuteMushy:1458225626350878894> Welcome in!`,
+                        `<@${newMember.user.id}> has arrived in our cosy corner <:xFergHeart:1458225766163550250> Welcome in!`,
+                        `A new shroom popped up! Our field keeps growing 🍄 Welcome in <@${newMember.user.id}>!`,
+                        `A wild <@${newMember.user.id}> has appeared <:tishexcited:1352045517915295776> Welcome in!`,
+                        `With a dash of magic and a sprinkle of fun <@${newMember.user.id}> has appeared :magic_wand: Welcome in!`
                     ];
                     const chosenMessage = messagesList[Math.floor(Math.random() * messagesList.length)];
                     await channel.send(`${chosenMessage}`);

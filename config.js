@@ -29,7 +29,8 @@ const SHROOMS_ID = '1353641622360948766';
 const BOTS_ID = '1289221687858036809';
 
 // Misc
-const DATA_FILE = './counting.json';
+const COUNTING_FILE = './counting.json';
+const PARTY_FILE = './parties.json';
 const GUMMY_ID = '234669887102910465';
 
 module.exports = {
@@ -37,7 +38,8 @@ module.exports = {
     GUMMY_BOT_BUILD_ID,
     GUMMY_ID,
     COUNTING_ID,
-    DATA_FILE,
+    COUNTING_FILE,
+    PARTY_FILE,
     MON_ID,
     TUE_ID,
     WED_ID,

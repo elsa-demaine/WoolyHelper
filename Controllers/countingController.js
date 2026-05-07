@@ -2,19 +2,19 @@
     fs,
     COUNTING_ID,
     BOTS_ID,
-    DATA_FILE
+    COUNTING_FILE
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
 function loadFile() {
-    if (fs.existsSync(DATA_FILE)) {
-        return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
+    if (fs.existsSync(COUNTING_FILE)) {
+        return JSON.parse(fs.readFileSync(COUNTING_FILE, "utf-8"));
     }
     return {};
 }
 
 function updateFile(data) {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    fs.writeFileSync(COUNTING_FILE, JSON.stringify(data, null, 2));
 }
 
 function init(client) {
@@ -26,6 +26,15 @@ function init(client) {
 
             const member = await message.guild.members.fetch(message.author.id);
             if (member.roles.cache.has(BOTS_ID)) return;
+
+            if (message.content === `!save`) {
+                let data = loadFile();
+                let saved = data.savedUsedNumber;
+                if (data.savedUsedNumber === -101) {
+                    saved = 0;
+                }
+                return message.reply(`Last saved was used on ${saved}`);
+            }
 
             const currentNumber = Number(message.content);
             if (!Number.isNaN(currentNumber) && Number.isInteger(currentNumber)) {
@@ -109,7 +118,7 @@ function init(client) {
                 updateFile(data);
             }
             else if (String(message.content).toUpperCase() === "RULES") {
-                return channel.send('1) No skipping numbers \n2) No going back in numbers \n3) Must alternate counters \n4) Do not intentionally ruin the count');
+                return channel.send('1) No skipping numbers \n2) No going back in numbers \n3) Must alternate counters \n4) Do not intentionally ruin the count\nUse !save to know when the last save was used');
             };
         } catch (err) {
             await errorController.sendError(client, err);

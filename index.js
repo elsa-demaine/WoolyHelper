@@ -2,11 +2,11 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const errorController = require('./errorHandler.js');
 const memberController = require('./Controllers/memberController.js');
-const counting = require('./Controllers/countingController.js');
+const countingController = require('./Controllers/countingController.js');
 const channelController = require('./Controllers/channelController.js');
 const majiController = require('./Controllers/majiController.js');
 const slotsController = require('./Controllers/slotsController.js');
-const partyQuestionnaireController = require('./Controllers/partyQuestionnaireController.js');
+const partyPingController = require('./Controllers/partyPingController.js');
 
 // === BOT SETUP ===
 const client = new Client({
@@ -44,7 +44,7 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'help') {
-            const version = '1.2.3';
+            const version = '1.3.0';
             await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\n - Party Thread pings\nIf you need more information please contact GummyMouton <3.\nVersion ${version}`);
         }
     } catch (err) {
@@ -55,11 +55,11 @@ client.on('interactionCreate', async (interaction) => {
 try {
     // Pass client to controller
     memberController.init(client);
-    counting.init(client);
+    countingController.init(client);
     channelController.init(client);
     majiController.init(client);
     slotsController.init(client);
-    partyQuestionnaireController.init(client);
+    partyPingController.init(client);
 } catch (err) {
     errorController.sendError(client, err);
 }
