@@ -20,26 +20,6 @@ function init(client) {
     client.on('guildMemberAdd', async (member) => {
         try {
             await member.roles.add(UNVERIFIED_ID);
-
-            setTimeout(async () => {
-                const isShroom = member.roles.cache.has(SHROOMS_ID);
-
-                if (!isShroom) {
-                    // TODO
-                    const channel = member.guild.channels.cache.get(GUMMY_BOT_BUILD_ID);
-                    await channel.send(`${member.user.displayName} don't forget to confirm your IGN to see the whole discord`);
-                }
-            }, 24 * 60 * 60 * 1000); // 24 hours (hour * minute * seconds * milliseconds)
-
-            setTimeout(async () => {
-                const isShroom = member.roles.cache.has(SHROOMS_ID);
-
-                if (!isShroom) {
-                    // TODO
-                    const channel = member.guild.channels.cache.get(GUMMY_BOT_BUILD_ID);
-                    await channel.send(`${member.user.displayName}: Last warning to confirm your IGN to see the whole discord`);
-                }
-            }, 48 * 60 * 60 * 1000); // 48 hours (hour * minute * seconds * milliseconds)
         } catch (err) {
             await errorController.sendError(client, err);
         }
@@ -88,7 +68,8 @@ function init(client) {
                         `<@${newMember.user.id}> has arrived in our cosy corner <:xFergHeart:1458225766163550250> Welcome in!`,
                         `A new shroom popped up! Our field keeps growing 🍄 Welcome in <@${newMember.user.id}>!`,
                         `A wild <@${newMember.user.id}> has appeared <:tishexcited:1352045517915295776> Welcome in!`,
-                        `With a dash of magic and a sprinkle of fun <@${newMember.user.id}> has appeared :magic_wand: Welcome in!`
+                        `With a dash of magic and a sprinkle of fun <@${newMember.user.id}> has appeared :magic_wand: Welcome in!`,
+                        `A lil' lamb has joined our flock 🐑 Welcome in <@${newMember.user.id}>!`
                     ];
                     const chosenMessage = messagesList[Math.floor(Math.random() * messagesList.length)];
                     await channel.send(`${chosenMessage}`);

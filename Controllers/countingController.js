@@ -29,11 +29,23 @@ function init(client) {
 
             if (message.content === `!save`) {
                 let data = loadFile();
-                let saved = data.savedUsedNumber;
+                let savedUsed;
+                let savedBack;
+
                 if (data.savedUsedNumber === -101) {
-                    saved = 0;
+                    savedUsed = `No saved was used.`;
                 }
-                return message.reply(`Last saved was used on ${saved}`);
+                else {
+                    savedUsed = `Last saved was used on ${data.savedUsedNumber}.`;
+                }
+                if (data.previousNumber - data.savedUsedNumber < 100) {
+                    savedBack = `It will be back in ${data.previousNumber - data.savedUsedNumber} numbers.`
+                }
+                else {
+                    savedBack = `The save is back.`
+                }
+
+                return message.reply(`${savedUsed}${savedBack}`);
             }
 
             const currentNumber = Number(message.content);
