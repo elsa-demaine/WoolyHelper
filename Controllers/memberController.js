@@ -13,8 +13,6 @@
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
-const welcomedMembers = new Set();
-
 function init(client) {
     // === JOINS ===
     client.on('guildMemberAdd', async (member) => {
@@ -50,12 +48,6 @@ function init(client) {
 
             const isOldShroom = oldMember.roles.cache.has(SHROOMS_ID);
             const isNewShroom = newMember.roles.cache.has(SHROOMS_ID);
-
-            // Prevent duplicate welcomes
-            if (welcomedMembers.has(newMember.id)) return;
-            welcomedMembers.add(newMember.id);
-            // Cleanup after 1 minute
-            setTimeout(() => welcomedMembers.delete(newMember.id), 60_000);
 
             if (isOldShroom === false && isNewShroom === true) {
                 if (oldMember.user.username === 'smolcrisp') {
