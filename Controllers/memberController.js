@@ -1,5 +1,4 @@
 ﻿const {
-    GUMMY_BOT_BUILD_ID,
     MEMBER_NAMES_ID,
     WELP_THEY_GONE_ID,
     CONFIRM_YOUR_IGN_ID,
@@ -78,9 +77,6 @@ function init(client) {
             if (message.channel.id === CONFIRM_YOUR_IGN_ID) {
                 const guild = client.guilds.cache.first();
                 const member = guild.members.cache.get(message.author.id);
-
-                const channel = guild.channels.cache.get(GUMMY_BOT_BUILD_ID);
-                await channel.send(`DEBUG: ${member.user.username} (${member.user.displayName}) has written ${message.content}`);
 
                 if (member.roles.cache.has(MOD_ID)) return;
                 if (member.roles.cache.has(SS_ID)) return;

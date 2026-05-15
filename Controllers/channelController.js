@@ -1,5 +1,4 @@
 const {
-    GUMMY_BOT_BUILD_ID,
     MON_ID,
     TUE_ID,
     WED_ID,
@@ -12,15 +11,12 @@ const {
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild, categoryId) {
-    const channelLogs = client.channels.cache.get(GUMMY_BOT_BUILD_ID);
-
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
 
         partyUp.threads.cache.forEach(async (thread) => {
             try {
                 if (await isInactive(thread, 168)) { // 1 week
-                    channelLogs.send(`${thread.name} is being deleted`);
                     thread.delete();
                 }
             } catch (err) {

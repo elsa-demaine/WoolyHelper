@@ -37,17 +37,17 @@ function init(client) {
                         .setCustomId("party_cooking")
                         .setLabel("Cooking Party")
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji("<:palia_Currency_Cooking:1461568602993066088>"),
+                        .setEmoji("<:palia_currency_cooking:1504662268883767386>"),
                     new ButtonBuilder()
                         .setCustomId("party_hunting")
                         .setLabel("Hunting Party")
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji("<:palia_Currency_Hunting:1461568805074636801>"),
+                        .setEmoji("<:palia_currency_hunting:1504662238215012362>"),
                     new ButtonBuilder()
                         .setCustomId("party_bugging")
                         .setLabel("Bugging Party")
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji("<:palia_Currency_Bug:1461570885159751842>")
+                        .setEmoji("<:palia_currency_bug:1504661926930682017>")
                 );
 
                 const row2 = new ActionRowBuilder().addComponents(
@@ -55,17 +55,17 @@ function init(client) {
                         .setCustomId("party_mining")
                         .setLabel("Mining Party")
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji("<:palia_Currency_Mining:1461568258887913590>"),
+                        .setEmoji("<:palia_currency_mining:1504662299326156861>"),
                     new ButtonBuilder()
                         .setCustomId("party_fishing")
                         .setLabel("Fishing Party")
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji("<:palia_Currency_Fishing:1461570651667038238>"),
+                        .setEmoji("<:palia_currency_fishing:1504662142115381448>"),
                     new ButtonBuilder()
                         .setCustomId("party_foraging")
                         .setLabel("Foraging Party (Flow trees included)")
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji("<:palia_Currency_Foraging:1461569002731208734>")
+                        .setEmoji("<:palia_currency_foraging:1504662204102869114>")
                 );
 
                 const msg = await thread.send({

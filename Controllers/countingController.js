@@ -39,7 +39,7 @@ function init(client) {
                     savedUsed = `Last saved was used on ${data.savedUsedNumber}.`;
                 }
                 if (data.previousNumber - data.savedUsedNumber < 100) {
-                    savedBack = `It will be back in ${data.previousNumber - data.savedUsedNumber} numbers.`
+                    savedBack = `It will be back in ${100-(data.previousNumber - data.savedUsedNumber)} numbers.`
                 }
                 else {
                     savedBack = `The save is back.`
