@@ -113,6 +113,7 @@ function init(client) {
 
         if (interaction.commandName === 'cleanup') {
             try {
+                await interaction.deferReply({ content: "Sweeping..." });
                 const guild = client.guilds.cache.first();
 
                 CheckParties(client, guild, PARTY_UP_ID);
@@ -123,6 +124,7 @@ function init(client) {
                 CheckParties(client, guild, FRI_ID);
                 CheckParties(client, guild, SAT_ID);
                 CheckParties(client, guild, SUN_ID);
+                return await interaction.editReply(`All cleaned!`);
             } catch (err) {
                 await errorController.sendError(client, err);
             }
