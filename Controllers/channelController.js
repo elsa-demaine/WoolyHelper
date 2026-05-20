@@ -6,27 +6,35 @@ const {
     FRI_ID,
     SAT_ID,
     SUN_ID,
-    PARTY_UP_ID,
-    GUMMY_BOT_BUILD_ID
+    PARTY_UP_ID
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild, categoryId) {
-    const channelLogs = client.channels.cache.get(GUMMY_BOT_BUILD_ID);
 
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
 
-        partyUp.threads.cache.forEach(async (thread) => {
+        // Fetch active threads
+        const activeThreads = await partyUp.threads.fetch();
+        // Fetch archived threads too
+        const archivedThreads = await partyUp.threads.fetchArchived();
+
+        // Merge both collections
+        const allThreads = [
+            ...activeThreads.threads.values(),
+            ...archivedThreads.threads.values()
+        ];
+
+        for (const thread of allThreads) {
             try {
                 if (await isInactive(thread, 168)) { // 1 week
-                    channelLogs.send(`${thread.name} is being deleted`);
-                    thread.delete();
+                    await thread.delete();
                 }
             } catch (err) {
                 await errorController.sendError(client, err);
             }
-        });
+        };
     } else {
         const channels = guild.channels.cache.filter(
             c => c.parentId === categoryId
@@ -35,7 +43,7 @@ async function CheckParties(client, guild, categoryId) {
         channels.forEach(async (chan) => {
             try {
                 if (isExpired(chan) && await isInactive(chan, 24)) {
-                    chan.delete();
+                    await chan.delete();
                 }
             } catch (err) {
                 await errorController.sendError(client, err);
