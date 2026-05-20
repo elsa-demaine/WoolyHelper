@@ -6,17 +6,21 @@ const {
     FRI_ID,
     SAT_ID,
     SUN_ID,
-    PARTY_UP_ID
+    PARTY_UP_ID,
+    GUMMY_BOT_BUILD_ID
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild, categoryId) {
+    const channelLogs = client.channels.cache.get(GUMMY_BOT_BUILD_ID);
+
     if (categoryId === PARTY_UP_ID) {
         const partyUp = guild.channels.cache.get(PARTY_UP_ID);
 
         partyUp.threads.cache.forEach(async (thread) => {
             try {
                 if (await isInactive(thread, 168)) { // 1 week
+                    channelLogs.send(`${thread.name} is being deleted`);
                     thread.delete();
                 }
             } catch (err) {
@@ -103,6 +107,27 @@ function init(client) {
             }
         }, 2 * 60 * 60 * 1000); // 2 hours (hour * minute * seconds * milliseconds)
     });
+
+    client.on('interactionCreate', async interaction => {
+        if (!interaction.isChatInputCommand()) return;
+
+        if (interaction.commandName === 'cleanup') {
+            try {
+                const guild = client.guilds.cache.first();
+
+                CheckParties(client, guild, PARTY_UP_ID);
+                CheckParties(client, guild, MON_ID);
+                CheckParties(client, guild, TUE_ID);
+                CheckParties(client, guild, WED_ID);
+                CheckParties(client, guild, THU_ID);
+                CheckParties(client, guild, FRI_ID);
+                CheckParties(client, guild, SAT_ID);
+                CheckParties(client, guild, SUN_ID);
+            } catch (err) {
+                await errorController.sendError(client, err);
+            }
+        };
+    })
 };
 
 module.exports = { init };

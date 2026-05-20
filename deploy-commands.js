@@ -14,6 +14,9 @@ const commands = [
         .setName('non-shrooms')
         .setDescription('List all server members who do not have the Shrooms role'),
     new SlashCommandBuilder()
+        .setName('cleanup')
+        .setDescription('Cleans up all party channels and party threads that are expired'),
+    new SlashCommandBuilder()
         .setName('spin')
         .setDescription('Spin a list of names to find a winner')
         .addStringOption((option) => option
