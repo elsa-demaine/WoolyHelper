@@ -108,7 +108,7 @@ function init(client) {
                     await msg.delete().catch(() => { });
                 });
 
-            }, 30 * 1000); // 30 seconds  
+            }, 15 * 1000); // 15 seconds
         } catch (err) {
             await errorController.sendError(client, err);
         }

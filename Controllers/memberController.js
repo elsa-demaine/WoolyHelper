@@ -42,7 +42,7 @@ function init(client) {
             if (oldNick !== newNick) {
                 const channel = newMember.guild.channels.cache.get(MEMBER_NAMES_ID);
                 // Send ONLY the updated line
-                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.user.displayName ?? oldMember.nickname ?? 'None'} to ${newMember.nickname ?? 'None'}`);
+                await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.nickname ?? oldMember.user.displayName ?? 'None'} to ${newMember.nickname ?? 'None'}`);
             }
 
             const isOldShroom = oldMember.roles.cache.has(SHROOMS_ID);
