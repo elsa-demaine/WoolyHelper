@@ -11,7 +11,10 @@ function init(client) {
             await interaction.deferReply({ content: "Loading..." });
 
             const participants = interaction.options.getString('participants');
-            const nbWinners = interaction.options.getNumber('winners');
+            let nbWinners = interaction.options.getNumber('winners');
+            if (nbWinners === 0) {
+                nbWinners = 1;
+            }
 
             let entries = participants.split(';');
             entries = entries.map(item => item.trim());
