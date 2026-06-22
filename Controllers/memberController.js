@@ -8,7 +8,9 @@
     PH_ID,
     SHROOMS_ID,
     UNVERIFIED_ID,
-    BOTS_ID
+    BOTS_ID,
+    WH_ID,
+    GUMMY_BOT_BUILD_ID
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
@@ -54,21 +56,52 @@ function init(client) {
                     await channel.send(`Bad Smol! Stop removing your Shrooms role!`);
                 } else {
                     const channel = newMember.guild.channels.cache.get(CHITTER_CHATTER_ID);
-                    const messagesList = [
-                        `The grove grows bigger thanks to <@${newMember.user.id}> <:xCuteMushy:1458225626350878894> Welcome in!`,
-                        `<@${newMember.user.id}> has arrived in our cosy corner <:xFergHeart:1458225766163550250> Welcome in!`,
-                        `A new shroom popped up! Our field keeps growing 🍄 Welcome in <@${newMember.user.id}>!`,
-                        `A wild <@${newMember.user.id}> has appeared <:tishexcited:1352045517915295776> Welcome in!`,
-                        `With a dash of magic and a sprinkle of fun <@${newMember.user.id}> has appeared :magic_wand: Welcome in!`,
-                        `A lil' lamb has joined our flock 🐑 Welcome in <@${newMember.user.id}>!`
-                    ];
-                    const chosenMessage = messagesList[Math.floor(Math.random() * messagesList.length)];
-                    await channel.send(`${chosenMessage}`);
+                    const lastMessage = await channel.messages.fetch({ limit: 1 }).then(msgs => msgs.first());
+                    if (lastMessage.author.id === WH_ID && lastMessage.content.includes(`<@${newMember.user.id}>`)) {
+                        const guild = client.guilds.cache.first();
+                        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+
+                        await debugChannel.send('Debugging double welcome message');
+                    }
+                    else {
+                        const messagesList = [
+                            `The grove grows bigger thanks to <@${newMember.user.id}> <:xCuteMushy:1458225626350878894> Welcome in!`,
+                            `<@${newMember.user.id}> has arrived in our cosy corner <:xFergHeart:1458225766163550250> Welcome in!`,
+                            `A new shroom popped up! Our field keeps growing 🍄 Welcome in <@${newMember.user.id}>!`,
+                            `A wild <@${newMember.user.id}> has appeared <:tishexcited:1352045517915295776> Welcome in!`,
+                            `With a dash of magic and a sprinkle of fun <@${newMember.user.id}> has appeared :magic_wand: Welcome in!`,
+                            `A lil' lamb has joined our flock 🐑 Welcome in <@${newMember.user.id}>!`
+                        ];
+                        const chosenMessage = messagesList[Math.floor(Math.random() * messagesList.length)];
+                        await channel.send(`${chosenMessage}`);
+                    }                    
                 }
             }
         } catch (err) {
             await errorController.sendError(client, err);
         }
+    });
+
+    // === DEBUG ===
+    client.on('shardDisconnect', () => {
+        const guild = client.guilds.cache.first();
+        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+
+        debugChannel.send('Disconnected from Discord');
+    });
+
+    client.on('shardResume', () => {
+        const guild = client.guilds.cache.first();
+        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+
+        debugChannel.send('Connection resumed');
+    });
+
+    client.on('shardError', err => {
+        const guild = client.guilds.cache.first();
+        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+
+        debugChannel.send(`Shard error: ${err.message}`);
     });
 
     // === MESSAGE COMMANDS ===

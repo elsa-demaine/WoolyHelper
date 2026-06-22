@@ -46,7 +46,11 @@ client.on('interactionCreate', async (interaction) => {
 
         if (interaction.commandName === 'help') {
             const version = '1.3.4';
-            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\n - Party Thread pings\nIf you need more information please contact GummyMouton <3.\nVersion ${version}`);
+            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\n - Party Thread pings\nIf you need more information please contact GummyMouton <3.\nVersion ${version}
+  \nready: ${client.isReady()},
+  \nping: ${client.ws.ping},
+  \nuptime: ${process.uptime()},
+  \nguilds: ${client.guilds.cache.size}`);
         }
     } catch (err) {
         await errorController.sendError(client, err);

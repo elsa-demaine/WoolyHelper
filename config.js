@@ -29,6 +29,7 @@ const SHROOMS_ID = '1353641622360948766';
 const BOTS_ID = '1289221687858036809';
 
 // Misc
+const WH_ID = '1489679939488972840';
 const COUNTING_FILE = './counting.json';
 const PARTY_FILE = './parties.json';
 const GUMMY_ID = '234669887102910465';
@@ -63,5 +64,6 @@ module.exports = {
     BOTS_ID,
     PALIA_GENERAL_CHAT_ID,
     PALIA_CAT_ID,
-    SESH_BOT_ID
+    SESH_BOT_ID,
+    WH_ID
 };
