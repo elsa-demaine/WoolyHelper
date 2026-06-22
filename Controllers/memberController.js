@@ -59,7 +59,7 @@ function init(client) {
                     const lastMessage = await channel.messages.fetch({ limit: 1 }).then(msgs => msgs.first());
                     if (lastMessage.author.id === WH_ID && lastMessage.content.includes(`<@${newMember.user.id}>`)) {
                         const guild = client.guilds.cache.first();
-                        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+                        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID));
 
                         await debugChannel.send('Debugging double welcome message');
                     }
@@ -85,21 +85,21 @@ function init(client) {
     // === DEBUG ===
     client.on('shardDisconnect', () => {
         const guild = client.guilds.cache.first();
-        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID));
 
         debugChannel.send('Disconnected from Discord');
     });
 
     client.on('shardResume', () => {
         const guild = client.guilds.cache.first();
-        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID));
 
         debugChannel.send('Connection resumed');
     });
 
     client.on('shardError', err => {
         const guild = client.guilds.cache.first();
-        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID);
+        const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID));
 
         debugChannel.send(`Shard error: ${err.message}`);
     });
