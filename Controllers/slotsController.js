@@ -1,5 +1,5 @@
-﻿const { createCanvas } = require('@napi-rs/canvas');
-//const { createCanvas } = require('canvas');
+﻿//const { createCanvas } = require('@napi-rs/canvas');
+const { createCanvas } = require('canvas');
 const GIFEncoder = require('gif-encoder-2');
 const { AttachmentBuilder } = require('discord.js');
 
