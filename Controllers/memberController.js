@@ -9,10 +9,11 @@
     SHROOMS_ID,
     UNVERIFIED_ID,
     BOTS_ID,
-    WH_ID,
     GUMMY_BOT_BUILD_ID
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
+
+const welcomeLock = new Set();
 
 function init(client) {
     // === JOINS ===
@@ -38,30 +39,33 @@ function init(client) {
     client.on('guildMemberUpdate', async (oldMember, newMember) => {
         try {
             // doesn't seem to work with displayname
-            const oldNick = oldMember.nickname ?? null;
-            const newNick = newMember.nickname ?? null;
+            const nicknameChanged = oldMember.nickname !== newMember.nickname;
 
-            if (oldNick !== newNick) {
+            if (nicknameChanged) {
                 const channel = newMember.guild.channels.cache.get(MEMBER_NAMES_ID);
                 // Send ONLY the updated line
                 await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.nickname ?? oldMember.user.displayName ?? 'None'} to ${newMember.nickname ?? 'None'}`);
             }
+        } catch (err) {
+            await errorController.sendError(client, err);
+        }
 
-            const isOldShroom = oldMember.roles.cache.has(SHROOMS_ID);
-            const isNewShroom = newMember.roles.cache.has(SHROOMS_ID);
+        try {
+            const newShroom = !oldMember.roles.cache.has(SHROOMS_ID) && newMember.roles.cache.has(SHROOMS_ID)
 
-            if (isOldShroom === false && isNewShroom === true) {
+            if (newShroom) {
+
+                if (welcomeLock.has(newMember.id)) {
+                    return;
+                }
+
+                welcomeLock.add(newMember.id);
+
                 if (oldMember.user.username === 'smolcrisp') {
                     const channel = newMember.guild.channels.cache.get(MEMBER_NAMES_ID);
                     await channel.send(`Bad Smol! Stop removing your Shrooms role!`);
                 } else {
                     const channel = newMember.guild.channels.cache.get(CHITTER_CHATTER_ID);
-                    const lastMessage = await channel.messages.fetch({ limit: 1 }).then(msgs => msgs.first());
-
-                    const guild = client.guilds.cache.first();
-                    const debugChannel = guild.channels.cache.get((GUMMY_BOT_BUILD_ID));
-
-                    //if (lastMessage.author.id === WH_ID && lastMessage.content.includes(`<@${newMember.user.id}>`)) {
 
                     const messagesList = [
                         `The grove grows bigger thanks to <@${newMember.user.id}> <:xCuteMushy:1458225626350878894> Welcome in!`,
@@ -72,12 +76,14 @@ function init(client) {
                         `A lil' lamb has joined our flock 🐑 Welcome in <@${newMember.user.id}>!`
                     ];
                     const chosenMessage = messagesList[Math.floor(Math.random() * messagesList.length)];
-                    await channel.send(`${chosenMessage}`);
-                    await debugChannel.send(`last author id = ${lastMessage.author.id} and content ${lastMessage.content} and includes ${newMember.user.id}`);
+                    await channel.send(chosenMessage);
                 }
             }
         } catch (err) {
             await errorController.sendError(client, err);
+            setTimeout(() => {
+                welcomeLock.delete(newMember.id);
+            }, 10000);
         }
     });
 
@@ -85,8 +91,7 @@ function init(client) {
     client.on('messageCreate', async (message) => {
         try {
             if (message.channel.id === CONFIRM_YOUR_IGN_ID) {
-                const guild = client.guilds.cache.first();
-                const member = guild.members.cache.get(message.author.id);
+                const member = await message.guild.members.fetch(message.author.id);
 
                 if (member.roles.cache.has(MOD_ID)) return;
                 if (member.roles.cache.has(SS_ID)) return;
