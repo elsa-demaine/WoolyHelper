@@ -29,8 +29,8 @@ async function CheckParties(client, guild, categoryId) {
 function isExpired(channel) {
     const now = new Date();
     const regex = /^[^-]+-(\d{1,2})-([a-z]{3})/i;
-    const match = channel.match(regex);
-    const day = (match[1]) + 1;
+    const match = channel.name.match(regex);
+    const day = Number(match[1]) + 1;
     const month = (match[2]);
     let nMonth;
 
