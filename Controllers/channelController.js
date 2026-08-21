@@ -1,61 +1,37 @@
+const { EmbedBuilder } = require('discord.js');
 const {
-    MON_ID,
-    TUE_ID,
-    WED_ID,
-    THU_ID,
-    FRI_ID,
-    SAT_ID,
-    SUN_ID,
-    PARTY_UP_ID
+    TWJ_EVENTS_ID,
+    PARTY_PLANNER_ID,
+    DECOR_COMP_ID,
+    PALIA_LFG,
+    SHROOM_EVENTS
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild, categoryId) {
+    const channels = guild.channels.cache.filter(
+        c => c.parentId === categoryId
+    );
 
-    if (categoryId === PARTY_UP_ID) {
-        const partyUp = guild.channels.cache.get(PARTY_UP_ID);
-
-        // Fetch active threads
-        const activeThreads = await partyUp.threads.fetch();
-        // Fetch archived threads too
-        const archivedThreads = await partyUp.threads.fetchArchived();
-
-        // Merge both collections
-        const allThreads = [
-            ...activeThreads.threads.values(),
-            ...archivedThreads.threads.values()
-        ];
-
-        for (const thread of allThreads) {
-            try {
-                if (await isInactive(thread, 168)) { // 1 week
-                    await thread.delete();
-                }
-            } catch (err) {
-                await errorController.sendError(client, err);
-            }
-        };
-    } else {
-        const channels = guild.channels.cache.filter(
-            c => c.parentId === categoryId
-        );
-
-        channels.forEach(async (chan) => {
-            try {
+    channels.forEach(async (chan) => {
+        try {
+            if (!(chan.id === PARTY_PLANNER_ID || chan.id === DECOR_COMP_ID)) {
                 if (isExpired(chan) && await isInactive(chan, 24)) {
                     await chan.delete();
                 }
-            } catch (err) {
-                await errorController.sendError(client, err);
             }
-        });
-    }    
+        } catch (err) {
+            await errorController.sendError(client, err);
+        }
+    })  
 };
 
 function isExpired(channel) {
     const now = new Date();
-    const day = Number(channel.name.slice(0, 2)) + 1;
-    const month = channel.name.slice(3, 6);
+    const regex = /^[^-]+-(\d{1,2})-([a-z]{3})/i;
+    const match = channel.match(regex);
+    const day = (match[1]) + 1;
+    const month = (match[2]);
     let nMonth;
 
     if (month === 'jan') {
@@ -101,15 +77,7 @@ function init(client) {
         setInterval(async () => {
             try {
                 const guild = client.guilds.cache.first();
-
-                CheckParties(client, guild, PARTY_UP_ID);
-                CheckParties(client, guild, MON_ID);
-                CheckParties(client, guild, TUE_ID);
-                CheckParties(client, guild, WED_ID);
-                CheckParties(client, guild, THU_ID);
-                CheckParties(client, guild, FRI_ID);
-                CheckParties(client, guild, SAT_ID);
-                CheckParties(client, guild, SUN_ID);
+                CheckParties(client, guild, TWJ_EVENTS_ID);
             } catch (err) {
                 await errorController.sendError(client, err);
             }
@@ -123,21 +91,108 @@ function init(client) {
             try {
                 await interaction.deferReply({ content: "Sweeping..." });
                 const guild = client.guilds.cache.first();
-
-                CheckParties(client, guild, PARTY_UP_ID);
-                CheckParties(client, guild, MON_ID);
-                CheckParties(client, guild, TUE_ID);
-                CheckParties(client, guild, WED_ID);
-                CheckParties(client, guild, THU_ID);
-                CheckParties(client, guild, FRI_ID);
-                CheckParties(client, guild, SAT_ID);
-                CheckParties(client, guild, SUN_ID);
+                CheckParties(client, guild, TWJ_EVENTS_ID);
                 return await interaction.editReply(`All cleaned!`);
             } catch (err) {
                 await errorController.sendError(client, err);
             }
         };
     })
+
+    // === MESSAGE COMMANDS ===
+    const reminderTimers = new Map();
+    const reminderMessages = new Map();
+
+    client.on('messageCreate', async (message) => {
+        try {
+            if (message.author.bot) return;
+
+            const channelId = message.channel.id;
+
+            if (channelId === PALIA_LFG) {
+                // Cancel the previous timer for this channel
+                if (reminderTimers.has(channelId)) {
+                    clearTimeout(reminderTimers.get(channelId));
+                }
+
+                // Start a new 10-second timer
+                const timer = setTimeout(async () => {
+
+                    // Delete the previous reminder
+                    const oldMessage = reminderMessages.get(channelId);
+
+                    if (oldMessage) {
+                        try {
+                            await oldMessage.delete();
+                        } catch (error) {
+                            await errorController.sendError(client, error);
+                        }
+                    }
+
+                    // Send the new reminder
+                    const embedMessage = new EmbedBuilder()
+                        .setColor(0xb76bd7)
+                        .setTitle('Looking for group')
+                        .setDescription(`Hey, Shroomie! Use this channel to organise on the spot party up's! You can use @Shroom Search to notify other Shrooms`);
+
+                    const newMessage = await message.channel.send({
+                        embeds: [embedMessage],
+                        allowedMentions: { parse: [] }
+                    });
+
+                    // Remember it so we can delete it next time
+                    reminderMessages.set(channelId, newMessage);
+
+                    reminderTimers.delete(channelId);
+
+                }, 10000);
+
+                reminderTimers.set(channelId, timer);
+            }
+            else if (channelId === SHROOM_EVENTS) {
+                // Cancel the previous timer for this channel
+                if (reminderTimers.has(channelId)) {
+                    clearTimeout(reminderTimers.get(channelId));
+                }
+
+                // Start a new 10-second timer
+                const timer = setTimeout(async () => {
+
+                    // Delete the previous reminder
+                    const oldMessage = reminderMessages.get(channelId);
+
+                    if (oldMessage) {
+                        try {
+                            await oldMessage.delete();
+                        } catch (error) {
+                            await errorController.sendError(client, error);
+                        }
+                    }
+
+                    // Send the new reminder
+                    const embedMessage = new EmbedBuilder()
+                        .setColor(0xc27c0e)
+                        .setTitle('Shroom Events')
+                        .setDescription(`Hey, Shroomie! Use this channel to post scheduled parties you're hosting! You can use @Shroom Event to notify other Shrooms`);
+
+                    const newMessage = await message.channel.send({
+                        embeds: [embedMessage],
+                        allowedMentions: { parse: [] }
+                    });
+
+                    // Remember it so we can delete it next time
+                    reminderMessages.set(channelId, newMessage);
+
+                    reminderTimers.delete(channelId);
+
+                }, 10000);
+
+                reminderTimers.set(channelId, timer);
+            }
+        } catch (err) {
+            await errorController.sendError(client, err);
+        }
+    });
 };
 
 module.exports = { init };

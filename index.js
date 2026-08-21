@@ -6,8 +6,6 @@ const countingController = require('./Controllers/countingController.js');
 const channelController = require('./Controllers/channelController.js');
 const majiController = require('./Controllers/majiController.js');
 const slotsController = require('./Controllers/slotsController.js');
-const partyPingController = require('./Controllers/partyPingController.js');
-//const seshController = require('./Controllers/seshController.js');
 
 // === BOT SETUP ===
 const client = new Client({
@@ -45,8 +43,8 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'help') {
-            const version = '1.3.7';
-            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\n - Party Thread pings\nIf you need more information please contact GummyMouton <3.\nVersion ${version}
+            const version = '1.4.0';
+            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\nIf you need more information please contact GummyMouton <3.\nVersion ${version}
   \nready: ${client.isReady()},
   \nping: ${client.ws.ping},
   \nuptime: ${process.uptime()},
@@ -64,8 +62,6 @@ try {
     channelController.init(client);
     majiController.init(client);
     slotsController.init(client);
-    partyPingController.init(client);
-    //seshController.init(client);
 } catch (err) {
     errorController.sendError(client, err);
 }
