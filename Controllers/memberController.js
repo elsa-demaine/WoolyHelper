@@ -121,24 +121,13 @@ function init(client) {
     });
 
     // === THREADS ===
-    client.on('threadMembersUpdate', async (oldMembers, newMembers) => {
+    client.on('threadMembersUpdate', async (addedMembers, removedMembers, thread) => {
         try {
-            // Make sure this is the thread we're interested in
-            const thread = newMembers.thread;
+            // Only handle the Plush Trade thread
             if (thread.id !== PLUSH_TRADE) return;
 
-            // Find who joined
-            const joined = newMembers.addedMembers.filter(
-                member => !oldMembers.has(member.id)
-            );
-
-            // Find who left
-            const left = oldMembers.filter(
-                member => !newMembers.has(member.id)
-            );
-
-            // Assign role to people who joined
-            for (const member of joined.values()) {
+            // Members who joined
+            for (const member of addedMembers.values()) {
                 const guildMember = await thread.guild.members.fetch(member.id);
 
                 if (!guildMember.roles.cache.has(PLUSH_COLLECTION_ID)) {
@@ -146,8 +135,8 @@ function init(client) {
                 }
             }
 
-            // Remove role from people who left
-            for (const member of left.values()) {
+            // Members who left
+            for (const member of removedMembers.values()) {
                 const guildMember = await thread.guild.members.fetch(member.id);
 
                 if (guildMember.roles.cache.has(PLUSH_COLLECTION_ID)) {
