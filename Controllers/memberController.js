@@ -9,7 +9,8 @@
     SHROOMS_ID,
     UNVERIFIED_ID,
     BOTS_ID,
-    GUMMY_BOT_BUILD_ID
+    PLUSH_TRADE,
+    PLUSH_COLLECTION_ID
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
@@ -113,6 +114,45 @@ function init(client) {
                 await member.roles.remove(UNVERIFIED_ID);
 
                 await message.delete();
+            }
+        } catch (err) {
+            await errorController.sendError(client, err);
+        }
+    });
+
+    // === THREADS ===
+    client.on('threadMembersUpdate', async (oldMembers, newMembers) => {
+        try {
+            // Make sure this is the thread we're interested in
+            const thread = newMembers.thread;
+            if (thread.id !== PLUSH_TRADE) return;
+
+            // Find who joined
+            const joined = newMembers.addedMembers.filter(
+                member => !oldMembers.has(member.id)
+            );
+
+            // Find who left
+            const left = oldMembers.filter(
+                member => !newMembers.has(member.id)
+            );
+
+            // Assign role to people who joined
+            for (const member of joined.values()) {
+                const guildMember = await thread.guild.members.fetch(member.id);
+
+                if (!guildMember.roles.cache.has(PLUSH_COLLECTION_ID)) {
+                    await guildMember.roles.add(PLUSH_COLLECTION_ID);
+                }
+            }
+
+            // Remove role from people who left
+            for (const member of left.values()) {
+                const guildMember = await thread.guild.members.fetch(member.id);
+
+                if (guildMember.roles.cache.has(PLUSH_COLLECTION_ID)) {
+                    await guildMember.roles.remove(PLUSH_COLLECTION_ID);
+                }
             }
         } catch (err) {
             await errorController.sendError(client, err);
