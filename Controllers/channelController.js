@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+﻿const { EmbedBuilder } = require('discord.js');
 const {
     TWJ_EVENTS_ID,
     PARTY_PLANNER_ID,
@@ -133,7 +133,7 @@ function init(client) {
                     const embedMessage = new EmbedBuilder()
                         .setColor(0xb76bd7)
                         .setTitle('Looking for group')
-                        .setDescription(`Hey, Shroomie! Use this channel to organise on the spot party up's! You can use @Shroom Search to notify other Shrooms`);
+                        .setDescription(`Hey! Use this channel for when you're adventuring and want to party up right now! You can use @Shroom Search to notify other Shrooms <:wooly_search:1542552078327615530>\n--\nIf you are planning to host an event or party at a scheduled time, please use ⁠https://discord.com/channels/974030257432719381/1540450811849736213 <:wooly_party:1542547938323075104>`);
 
                     const newMessage = await message.channel.send({
                         embeds: [embedMessage],
@@ -173,7 +173,7 @@ function init(client) {
                     const embedMessage = new EmbedBuilder()
                         .setColor(0xc27c0e)
                         .setTitle('Shroom Events')
-                        .setDescription(`Hey, Shroomie! Use this channel to post scheduled parties you're hosting! You can use @Shroom Event to notify other Shrooms`);
+                        .setDescription(`Hey! Use this channel for when you are hosting a party or planning a get together at a scheduled time! You can use @Shroom Event to notify other Shrooms and using the Discord timestamp (see ⁠https://discord.com/channels/974030257432719381/1464337409855586630) shows the time in the viewers local timezone <:wooly_party:1542547938323075104>\n--\nIf you are playing right now and looking for friends, please use https://discord.com/channels/974030257432719381/1540450469338685571 <:wooly_search:1542552078327615530>`);
 
                     const newMessage = await message.channel.send({
                         embeds: [embedMessage],
