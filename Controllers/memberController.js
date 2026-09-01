@@ -70,9 +70,9 @@ function init(client) {
 
                     const messagesList = [
                         `The grove grows bigger thanks to <@${newMember.user.id}> <:xCuteMushy:1458225626350878894> Welcome in!`,
-                        `<@${newMember.user.id}> has arrived in our cosy corner <:xFergHeart:1458225766163550250> Welcome in!`,
+                        `<@${newMember.user.id}> has arrived in our cosy corner <:wooly_heart:1542543447855202384>  Welcome in!`,
                         `A new shroom popped up! Our field keeps growing 🍄 Welcome in <@${newMember.user.id}>!`,
-                        `A wild <@${newMember.user.id}> has appeared <:tishexcited:1352045517915295776> Welcome in!`,
+                        `A wild <@${newMember.user.id}> has appeared <:wooly_awe:1542546113020825640> Welcome in!`,
                         `With a dash of magic and a sprinkle of fun <@${newMember.user.id}> has appeared :magic_wand: Welcome in!`,
                         `A lil' lamb has joined our flock 🐑 Welcome in <@${newMember.user.id}>!`
                     ];
