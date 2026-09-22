@@ -2,10 +2,12 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const errorController = require('./errorHandler.js');
 const memberController = require('./Controllers/memberController.js');
+const commandsController = require('./Controllers/commandsController.js');
 const countingController = require('./Controllers/countingController.js');
 const channelController = require('./Controllers/channelController.js');
 const majiController = require('./Controllers/majiController.js');
 const slotsController = require('./Controllers/slotsController.js');
+const partyController = require('./Controllers/partyController.js');
 
 // === BOT SETUP ===
 const client = new Client({
@@ -43,12 +45,8 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'help') {
-            const version = '1.4.2';
-            await interaction.reply(`Hello! \nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - !maji command\n - spinner\nIf you need more information please contact GummyMouton <3.\nVersion ${version}
-  \nready: ${client.isReady()},
-  \nping: ${client.ws.ping},
-  \nuptime: ${process.uptime()},
-  \nguilds: ${client.guilds.cache.size}`);
+            const version = '1.5.0';
+            await interaction.reply(`Hello!\nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - personilized commands\n - spinner\nIf you need more information please contact GummyMouton <3.\nVersion ${version}`);
         }
     } catch (err) {
         await errorController.sendError(client, err);
@@ -58,10 +56,12 @@ client.on('interactionCreate', async (interaction) => {
 try {
     // Pass client to controller
     memberController.init(client);
-    countingController.init(client);
+    commandsController.init(client);
+    //countingController.init(client);
     channelController.init(client);
     majiController.init(client);
     slotsController.init(client);
+    partyController.init(client);
 } catch (err) {
     errorController.sendError(client, err);
 }

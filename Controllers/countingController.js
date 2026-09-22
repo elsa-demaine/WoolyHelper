@@ -1,7 +1,7 @@
 ﻿const {
     fs,
-    COUNTING_ID,
-    BOTS_ID,
+    COUNTING,
+    BOTS,
     COUNTING_FILE
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
@@ -21,11 +21,11 @@ function init(client) {
     // === MESSAGE COMMANDS ===
     client.on('messageCreate', async (message) => {
         try {
-            if (message.channel.id !== COUNTING_ID) return; // ignore other channels
-            const channel = client.channels.cache.get(COUNTING_ID);
+            if (message.channel.id !== COUNTING) return; // ignore other channels
+            const channel = client.channels.cache.get(COUNTING);
 
             const member = await message.guild.members.fetch(message.author.id);
-            if (member.roles.cache.has(BOTS_ID)) return;
+            if (member.roles.cache.has(BOTS)) return;
 
             if (message.content === `!save`) {
                 let data = loadFile();
@@ -139,8 +139,8 @@ function init(client) {
 
     client.on('messageDelete', async (message) => {
         try {
-            if (message.channel.id !== COUNTING_ID) return; // ignore other channels
-            const channel = client.channels.cache.get(COUNTING_ID);
+            if (message.channel.id !== COUNTING) return; // ignore other channels
+            const channel = client.channels.cache.get(COUNTING);
 
             if (message.partial) {
                 try {

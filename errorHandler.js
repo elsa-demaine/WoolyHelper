@@ -1,6 +1,6 @@
 ﻿const {
-    GUMMY_BOT_BUILD_ID,
-    GUMMY_ID
+    GUMMY_BOT_BUILD,
+    GUMMY
 } = require('./config.js');
 
 async function sendError(client, error) {
@@ -15,7 +15,7 @@ async function sendError(client, error) {
 
 async function sendErrorToChannel(client, errorMessage) {
     try {
-        const channel = await client.channels.fetch(GUMMY_BOT_BUILD_ID);
+        const channel = await client.channels.fetch(GUMMY_BOT_BUILD);
 
         if (!channel) return;
 
@@ -27,7 +27,7 @@ async function sendErrorToChannel(client, errorMessage) {
 
 async function sendErrorDM(client, errorMessage) {
     try {
-        const user = await client.users.fetch(GUMMY_ID);
+        const user = await client.users.fetch(GUMMY);
         await user.send(errorMessage);
     } catch (err) {
         console.error("Failed to send DM:", err);

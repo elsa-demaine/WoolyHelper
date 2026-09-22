@@ -1,16 +1,16 @@
 ﻿const {
-    MEMBER_NAMES_ID,
-    WELP_THEY_GONE_ID,
-    CONFIRM_YOUR_IGN_ID,
-    CHITTER_CHATTER_ID,
-    MOD_ID,
-    SS_ID,
-    PH_ID,
-    SHROOMS_ID,
-    UNVERIFIED_ID,
-    BOTS_ID,
+    WELCOME,
+    MEMBER_NAMES,
+    WELP_THEY_GONE,
+    CONFIRM_YOUR_IGN,
+    CHITTER_CHATTER,
+    MOD,
+    SHROOM_SUPPORT,
+    SHROOMS,
+    UNVERIFIED,
+    BOTS,
     PLUSH_TRADE,
-    PLUSH_COLLECTION_ID
+    PLUSH_COLLECTION
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
@@ -20,7 +20,9 @@ function init(client) {
     // === JOINS ===
     client.on('guildMemberAdd', async (member) => {
         try {
-            await member.roles.add(UNVERIFIED_ID);
+            await member.roles.add(UNVERIFIED);
+            const channel = member.guild.channels.cache.get(WELCOME);
+            await channel.send(`Hey ${member.user.username}, welcome to 𝐖𝐨𝐨𝐥𝐲 𝐉𝐮𝐦𝐩𝐞𝐫!\n\nPlease head to https://discord.com/channels/974030257432719381/1492542404270489871 to gain access to the full server, and take a minute to read the https://discord.com/channels/974030257432719381/1289221578562732184\n\nYou can also ⁠<id:customize> to receive notifications on your favourite events, introduce yourself in https://discord.com/channels/974030257432719381/1282611793595863150⁠, and learn more about the team in https://discord.com/channels/974030257432719381/1306904687064252450\n\nWe're happy to have you here and hope you enjoy your stay on our cozy side of the internet <:wooly_heart:1542543447855202384>`);
         } catch (err) {
             await errorController.sendError(client, err);
         }
@@ -29,7 +31,7 @@ function init(client) {
     // === LEAVES ===
     client.on('guildMemberRemove', async (member) => {
         try {
-            const channel = member.guild.channels.cache.get(WELP_THEY_GONE_ID);
+            const channel = member.guild.channels.cache.get(WELP_THEY_GONE);
             await channel.send(`💀 Left: ${member.user.username} | ${member.displayName || member.nickname || 'None'}`);
         } catch (err) {
             await errorController.sendError(client, err);
@@ -43,7 +45,7 @@ function init(client) {
             const nicknameChanged = oldMember.nickname !== newMember.nickname;
 
             if (nicknameChanged) {
-                const channel = newMember.guild.channels.cache.get(MEMBER_NAMES_ID);
+                const channel = newMember.guild.channels.cache.get(MEMBER_NAMES);
                 // Send ONLY the updated line
                 await channel.send(`✏️ Updated: ${newMember.user.username} has updated from ${oldMember.nickname ?? oldMember.user.displayName ?? 'None'} to ${newMember.nickname ?? 'None'}`);
             }
@@ -52,7 +54,7 @@ function init(client) {
         }
 
         try {
-            const newShroom = !oldMember.roles.cache.has(SHROOMS_ID) && newMember.roles.cache.has(SHROOMS_ID)
+            const newShroom = !oldMember.roles.cache.has(SHROOMS) && newMember.roles.cache.has(SHROOMS)
 
             if (newShroom) {
 
@@ -63,10 +65,10 @@ function init(client) {
                 welcomeLock.add(newMember.id);
 
                 if (oldMember.user.username === 'smolcrisp') {
-                    const channel = newMember.guild.channels.cache.get(MEMBER_NAMES_ID);
+                    const channel = newMember.guild.channels.cache.get(MEMBER_NAMES);
                     await channel.send(`Bad Smol! Stop removing your Shrooms role!`);
                 } else {
-                    const channel = newMember.guild.channels.cache.get(CHITTER_CHATTER_ID);
+                    const channel = newMember.guild.channels.cache.get(CHITTER_CHATTER);
 
                     const messagesList = [
                         `The grove grows bigger thanks to <@${newMember.user.id}> <:xCuteMushy:1458225626350878894> Welcome in!`,
@@ -91,13 +93,12 @@ function init(client) {
     // === MESSAGE COMMANDS ===
     client.on('messageCreate', async (message) => {
         try {
-            if (message.channel.id === CONFIRM_YOUR_IGN_ID) {
+            if (message.channel.id === CONFIRM_YOUR_IGN) {
                 const member = await message.guild.members.fetch(message.author.id);
 
-                if (member.roles.cache.has(MOD_ID)) return;
-                if (member.roles.cache.has(SS_ID)) return;
-                if (member.roles.cache.has(PH_ID)) return;
-                if (member.roles.cache.has(BOTS_ID)) return;
+                if (member.roles.cache.has(MOD)) return;
+                if (member.roles.cache.has(SHROOM_SUPPORT)) return;
+                if (member.roles.cache.has(BOTS)) return;
 
                 const safenickname = message.content
                     .slice(0, 200)             // size limit
@@ -110,8 +111,8 @@ function init(client) {
                     }[c]));
 
                 await member.setNickname(safenickname);
-                await member.roles.add(SHROOMS_ID);
-                await member.roles.remove(UNVERIFIED_ID);
+                await member.roles.add(SHROOMS);
+                await member.roles.remove(UNVERIFIED);
 
                 await message.delete();
             }
@@ -130,8 +131,8 @@ function init(client) {
             for (const member of addedMembers.values()) {
                 const guildMember = await thread.guild.members.fetch(member.id);
 
-                if (!guildMember.roles.cache.has(PLUSH_COLLECTION_ID)) {
-                    await guildMember.roles.add(PLUSH_COLLECTION_ID);
+                if (!guildMember.roles.cache.has(PLUSH_COLLECTION)) {
+                    await guildMember.roles.add(PLUSH_COLLECTION);
                 }
             }
 
@@ -139,8 +140,8 @@ function init(client) {
             for (const member of removedMembers.values()) {
                 const guildMember = await thread.guild.members.fetch(member.id);
 
-                if (guildMember.roles.cache.has(PLUSH_COLLECTION_ID)) {
-                    await guildMember.roles.remove(PLUSH_COLLECTION_ID);
+                if (guildMember.roles.cache.has(PLUSH_COLLECTION)) {
+                    await guildMember.roles.remove(PLUSH_COLLECTION);
                 }
             }
         } catch (err) {
@@ -161,7 +162,7 @@ function init(client) {
                 const members = [];
 
                 guild.members.cache.forEach(member => {
-                    if (!member.roles.cache.has(SHROOMS_ID) && !member.roles.cache.has(BOTS_ID)) {
+                    if (!member.roles.cache.has(SHROOMS) && !member.roles.cache.has(BOTS)) {
                         members.push(member);
                     }
                 });
