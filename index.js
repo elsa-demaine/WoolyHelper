@@ -57,7 +57,7 @@ try {
     // Pass client to controller
     memberController.init(client);
     commandsController.init(client);
-    //countingController.init(client);
+    countingController.init(client);
     channelController.init(client);
     majiController.init(client);
     slotsController.init(client);
