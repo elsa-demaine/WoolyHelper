@@ -22,7 +22,7 @@ function init(client) {
         try {
             await member.roles.add(UNVERIFIED);
             const channel = member.guild.channels.cache.get(WELCOME);
-            await channel.send(`Hey <@$${member.user.id}>, welcome to 𝐖𝐨𝐨𝐥𝐲 𝐉𝐮𝐦𝐩𝐞𝐫!\n\nPlease head to https://discord.com/channels/974030257432719381/1492542404270489871 to gain access to the full server, and take a minute to read the https://discord.com/channels/974030257432719381/1289221578562732184\n\nYou can also ⁠<id:customize> to receive notifications on your favourite events, introduce yourself in https://discord.com/channels/974030257432719381/1282611793595863150⁠, and learn more about the team in https://discord.com/channels/974030257432719381/1306904687064252450\n\nWe're happy to have you here and hope you enjoy your stay on our cozy side of the internet <:wooly_heart:1542543447855202384>`);
+            await channel.send(`Hey <@${member.user.id}>, welcome to 𝐖𝐨𝐨𝐥𝐲 𝐉𝐮𝐦𝐩𝐞𝐫!\n\nPlease head to https://discord.com/channels/974030257432719381/1492542404270489871 to gain access to the full server, and take a minute to read the https://discord.com/channels/974030257432719381/1289221578562732184\n\nYou can also ⁠<id:customize> to receive notifications on your favourite events, introduce yourself in https://discord.com/channels/974030257432719381/1282611793595863150⁠, and learn more about the team in https://discord.com/channels/974030257432719381/1306904687064252450\n\nWe're happy to have you here and hope you enjoy your stay on our cozy side of the internet <:wooly_heart:1542543447855202384>`);
         } catch (err) {
             await errorController.sendError(client, err);
         }
