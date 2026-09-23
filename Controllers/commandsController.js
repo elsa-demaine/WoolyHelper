@@ -22,37 +22,40 @@ function init(client) {
             // !bonk
             else if (command === `!bonk`) {
                 const target = message.mentions.users.first();
-                const targetName = target ? target : `you`;
+                const targetName = target ? target : args.join(` `);
+                const targetText = targetName ? targetName : `you`;
 
                 return channel.send({
-                    content: `Wooly Helper gently bonks ${targetName} with a tiny mushroom. BONK! 🐑🍄`,
+                    content: `Wooly Helper gently bonks ${targetText} with a tiny mushroom. BONK! 🐑🍄`,
                     allowedMentions: { parse: [] }
                 });
             }
             // !yeet
             else if (command === `!yeet`) {
                 const target = message.mentions.channels.first();
-                const targetChannel = target ? target : `he relevant channel for this topic`;
+                const targetChannel = target ? target : `the relevant channel for this topic`;
 
                 return channel.send(`⚠️ Wooly Helper has detected a lost Shroom ⚠️\n\nBuckle your seatbelts, you're being launched to ${targetChannel} 🐑💨 Please continue your discussion over there`);
             }
             // !hug
             else if (command === `!hug`) {
                 const target = message.mentions.users.first();
-                const targetName = target ? target : `you`;
+                const targetName = target ? target : args.join(` `);
+                const targetText = targetName ? targetName : `you`;
 
                 return channel.send({
-                    content: `Wooly Helper wraps ${targetName} in the warmest, fluffiest sheep hug 🐑💚`,
+                    content: `Wooly Helper wraps ${targetText} in the warmest, fluffiest sheep hug 🐑💚`,
                     allowedMentions: { parse: [] }
                 });
             }
             // headpats
             else if (command === `!headpats`) {
                 const target = message.mentions.users.first();
-                const targetName = target ? target : `you`;
+                const targetName = target ? target : args.join(` `);
+                const targetText = targetName ? targetName : `you`;
 
                 return channel.send({
-                    content: `Wooly Helper gives ${targetName} some very gentle headpats 🐑✨`,
+                    content: `Wooly Helper gives ${targetText} some very gentle headpats 🐑✨`,
                     allowedMentions: { parse: [] }
                 });
             }
