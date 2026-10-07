@@ -10,7 +10,8 @@ async function CheckParties(client, guild) {
 
     sch_parties.threads.cache.forEach(async (thread) => {
         try {
-            if (await isInactive(thread, 336)) { // 336 = 2 weeks
+            if (thread.id != '1557160748407586906' // Skip pinned thread "How to use"
+                && await isInactive(thread, 336)) { // 336 = 2 weeks
                 thread.delete();
             }
         } catch (err) {

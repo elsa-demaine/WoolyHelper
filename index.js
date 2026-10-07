@@ -45,7 +45,7 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'help') {
-            const version = '1.5.0';
+            const version = '1.5.1';
             await interaction.reply(`Hello!\nI am here to help TWJ with a couple of tasks;\n - Deleting old parties\n - Counting bot\n - personilized commands\n - spinner\nIf you need more information please contact GummyMouton <3.\nVersion ${version}`);
         }
     } catch (err) {
