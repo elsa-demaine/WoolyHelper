@@ -86,7 +86,7 @@ function init(client) {
                 });
 
                 const collector = msg.createMessageComponentCollector({
-                    time: 20 * 60 * 1000 // 20 minutes
+                    time: 61 * 60 * 1000 // 61 minutes
                 });
 
                 collector.on('collect', async (interaction) => {
