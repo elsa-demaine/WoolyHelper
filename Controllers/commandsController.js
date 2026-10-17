@@ -17,7 +17,7 @@ function init(client) {
                 );
             }
             else if (command ===`!fart`) {
-                return channel.send('huehue I farded');
+                return channel.send('huehue i farded');
             }
             // !bonk
             else if (command === `!bonk`) {
