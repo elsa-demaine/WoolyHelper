@@ -70,7 +70,7 @@ function init(client) {
                     clearTimeout(reminderTimers.get(channelId));
                 }
 
-                // Start a new 10-second timer
+                // Start a new timer
                 const timer = setTimeout(async () => {
 
                     // Delete the previous reminder
@@ -100,7 +100,7 @@ function init(client) {
 
                     reminderTimers.delete(channelId);
 
-                }, 10000);
+                }, 10000); //10 seconds
 
                 reminderTimers.set(channelId, timer);
             }

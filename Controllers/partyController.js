@@ -8,7 +8,8 @@ const {
     BUGGERS,
     FISHERS,
     BUILDERS,
-    PARTY_GOBLINS
+    PARTY_GOBLINS,
+    SESH
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
@@ -90,7 +91,8 @@ function init(client) {
                 });
 
                 collector.on('collect', async (interaction) => {
-                    if (interaction.user.id !== interaction.channel.ownerId) {
+                    if (interaction.user.id !== interaction.channel.ownerId &&
+                        interaction.channel.ownerId !== SESH) {
                         return interaction.reply({
                             content: 'Only the thread creator can use these buttons.',
                             ephemeral: true

@@ -39,11 +39,13 @@ const PARTY_GOBLINS = '1449136556123357195';
 // Misc
 const COUNTING_FILE = './counting.json';
 const GUMMY = '234669887102910465';
+const SESH = '616754792965865495';
 
 module.exports = {
     fs,
     GUMMY_BOT_BUILD,
     GUMMY,
+    SESH,
     COUNTING,
     COUNTING_FILE,
     PALIA_LFG,
