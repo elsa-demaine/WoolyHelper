@@ -1,23 +1,31 @@
 ﻿const { EmbedBuilder } = require('discord.js');
 const {
     PALIA_LFG,
-    SCHEDULED_PARTIES
+    SCHEDULED_PARTIES,
 } = require('./../config.js');
 const errorController = require('./../errorHandler.js');
 
 async function CheckParties(client, guild) {
     const sch_parties = guild.channels.cache.get(SCHEDULED_PARTIES);
 
-    sch_parties.threads.cache.forEach(async (thread) => {
+    const activeThreads = await sch_parties.threads.fetchActive();
+    const archivedThreads = await sch_parties.threads.fetchArchived();
+
+    const allThreads = [
+        ...activeThreads.threads.values(),
+        ...archivedThreads.threads.values()
+    ];
+
+    for (const thread of allThreads) {
         try {
             if (thread.id != '1557160748407586906' // Skip pinned thread "How to use"
                 && await isInactive(thread, 336)) { // 336 = 2 weeks
-                thread.delete();
+                await thread.delete();
             }
         } catch (err) {
             await errorController.sendError(client, err);
         }
-    });
+    };
 };
 
 async function isInactive(channel, hours) {
